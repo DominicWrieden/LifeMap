@@ -1,20 +1,19 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.dominicwrieden.lifemap"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {
@@ -33,36 +32,13 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
     implementation "androidx.core:core-ktx:$androidx_core_ktx_version"
-    implementation "com.android.support:multidex:$multidex_version"
-    implementation "com.google.android.gms:play-services-auth:$google_play_services_version"
-
-
-    //architecture components
-    implementation "androidx.lifecycle:lifecycle-extensions:$androidx_lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-reactivestreams:$androidx_lifecycle_version"
-    implementation "com.google.android.material:material:$google_material_version"
-
-
-
-    //ui
-    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
-    implementation "com.xwray:groupie:$groupie_version"
-    implementation "com.xwray:groupie-kotlin-android-extensions:$groupie_version"
-    implementation "com.xwray:groupie-databinding:$groupie_version"
-    implementation "com.github.bumptech.glide:glide:$glide_version"
-    kapt "com.github.bumptech.glide:compiler:$glide_version"
-
 
     //rx
     implementation "io.reactivex.rxjava2:rxjava:$rxjava2_rxjava_version"
     implementation "io.reactivex.rxjava2:rxandroid:$rxjava2_rxandroid_version"
     implementation "io.reactivex.rxjava2:rxkotlin:$rxjava2_rxkotlin_version"
-    implementation "com.jakewharton.rxrelay2:rxrelay:$rxrelay2_rxrelay_version"
-    implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxbinding2_version"
-    implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:$rxbinding2_version"
+
 
     //network
     implementation "com.squareup.retrofit2:retrofit:$retrofit2_retrofit_version"
@@ -70,18 +46,12 @@ dependencies {
     implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit2_moshi_converter_version"
 
-
     //injection
     implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-android-viewmodel:$koin_version"
     testImplementation "org.koin:koin-test:$koin_version"
     androidTestImplementation "org.koin:koin-test:$koin_version"
 
-    //test
+
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version"
-    testImplementation "com.google.truth:truth:$google_truth_version"
-    androidTestImplementation "androidx.arch.core:core-testing:$androidx_arch_core_testing_version"
 }
