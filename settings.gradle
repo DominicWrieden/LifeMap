@@ -1,2 +1,3 @@
 rootProject.name='LifeMap'
 include ':app'
+include ':data'
