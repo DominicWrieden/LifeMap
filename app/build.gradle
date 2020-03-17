@@ -28,6 +28,14 @@ android {
         targetCompatibility = 1.8
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
 }
 
 dependencies {
@@ -45,6 +53,10 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-reactivestreams:$androidx_lifecycle_version"
     implementation "com.google.android.material:material:$google_material_version"
 
+    //navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+
 
 
     //ui
@@ -54,6 +66,7 @@ dependencies {
     implementation "com.xwray:groupie-databinding:$groupie_version"
     implementation "com.github.bumptech.glide:glide:$glide_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
+    implementation "br.com.simplepass:loading-button-android:$simplepass_loading_button_version"
 
 
     //rx
@@ -63,13 +76,6 @@ dependencies {
     implementation "com.jakewharton.rxrelay2:rxrelay:$rxrelay2_rxrelay_version"
     implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxbinding2_version"
     implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:$rxbinding2_version"
-
-    //network
-    implementation "com.squareup.retrofit2:retrofit:$retrofit2_retrofit_version"
-    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$retrofit2_rxjava2_adapter_version"
-    implementation "com.squareup.moshi:moshi:$moshi_version"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofit2_moshi_converter_version"
-
 
     //injection
     implementation "org.koin:koin-android:$koin_version"

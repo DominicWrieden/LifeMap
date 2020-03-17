@@ -14,6 +14,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+
         // start Koin context
         startKoin {
 
@@ -22,7 +23,7 @@ class App : Application() {
 
             modules(
                 listOf(
-
+                    coreModule
                 )
             )
         }
