@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.squareup.sqldelight'
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
@@ -35,10 +36,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.core:core-ktx:$androidx_core_ktx_version"
 
-    //room
-    implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-    implementation "androidx.room:room-rxjava2:$room_version"
+    // sqldelight
+    implementation "com.squareup.sqldelight:android-driver:$sqldelight_version"
+    testImplementation "com.squareup.sqldelight:sqlite-driver:$sqldelight_version"
 
     //injection
     implementation "org.koin:koin-android:$koin_version"
