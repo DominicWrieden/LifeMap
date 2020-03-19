@@ -39,8 +39,8 @@ ext{
     moshi_version = '1.9.2'
     retrofit2_moshi_converter_version= '2.7.1'
 
-    //other
-    arcgis_version = '100.7.0'
+    //misc util
+    three_ten_version = '1.1.0'
 
     //test
     junit_version = '4.13'

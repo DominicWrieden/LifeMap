@@ -45,6 +45,9 @@ dependencies {
     testImplementation "org.koin:koin-test:$koin_version"
     androidTestImplementation "org.koin:koin-test:$koin_version"
 
+    //misc util
+    implementation "com.jakewharton.threetenabp:threetenabp:$three_ten_version"
+
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
 }
