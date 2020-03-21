@@ -6,36 +6,21 @@ enum class PropertyType{
     DATE
 }
 
+
+/**
+ * Property* model, which is corresponding to the database structure.
+ * Will be used for the communication between the data module {@link com.dominicwrieden.data}
+ * and the api module {@link com.dominicwrieden.api}
+ *
+ * This represents a configured String|Int|Date property from the server. Will be used for the
+ * Properties {@link com.dominicwrieden.data.model.Property} for an
+ * assessment {@link com.dominicwrieden.data.model.ItemEntry} of an Item {@link com.dominicwrieden.data.model.Item}
+ *
+ * IMPORTANT: Do not use this model for the repositories, which are communicating with the app module
+ */
 data class PropertyConfig(
      val remoteId: String,
      val name: String,
      val description:String?,
      val propertyType: PropertyType
 )
-
-
-/*
-interface PropertyConfig<T> {
-    val id: Int
-    val name: String
-    val description: String?
-    val value: T
-}
-
-
-data class PropertyConfigString(
-    @PrimaryKey(autoGenerate = true)
-    override val id: Int,
-    override val name: String,
-    override val description:String?,
-    override val value: String
-): PropertyConfig<String>
-
-data class PropertyConfigInt(
-    @PrimaryKey(autoGenerate = true)
-    override val id: Int,
-    override val name: String,
-    override val description:String?,
-    override va
-
-): PropertyConfig<Int> */

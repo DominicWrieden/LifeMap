@@ -1,0 +1,152 @@
+import android.location.Location;
+import android.net.Uri;
+import java.net.URI;
+import org.threeten.bp.OffsetDateTime;
+
+CREATE TABLE state (
+    remoteIdState TEXT NOT NULL UNIQUE PRIMARY KEY,
+    name TEXT NOT NULL DEFAULT "",
+    description TEXT NOT NULL DEFAULT ""
+);
+
+
+CREATE TABLE area (
+    remoteIdArea TEXT NOT NULL UNIQUE PRIMARY KEY,
+    name TEXT NOT NULL,
+    geoDbID TEXT NOT NULL,
+    geoDbName TEXT NOT NULL,
+    geoDbFilePath TEXT,
+    geoDbCreateDate TEXT AS OffsetDateTime NOT NULL
+);
+
+CREATE TABLE user (
+    remoteIdUser TEXT NOT NULL UNIQUE PRIMARY KEY,
+    email TEXT NOT NULL,
+    firstName TEXT NOT NULL,
+    lastName TEXT NOT NULL
+);
+
+CREATE TABLE area_user(
+    remoteIdUser TEXT NOT NULL,
+    remoteIdArea TEXT NOT NULL,
+    PRIMARY KEY (remoteIdUser, remoteIdArea),
+    FOREIGN KEY(remoteIdUser) REFERENCES user(remoteIdUser),
+    FOREIGN KEY(remoteIdArea) REFERENCES area(remoteIdArea)
+);
+
+CREATE TABLE itemType (
+    remoteIdItemType TEXT NOT NULL UNIQUE PRIMARY KEY,
+    name TEXT NOT NULL DEFAULT "",
+    description TEXT NOT NULL DEFAULT ""
+);
+
+
+
+
+CREATE TABLE item (
+    localIdItem INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
+    remoteIdItem TEXT,
+    remoteIdArea TEXT,
+    crateDate TEXT As OffsetDateTime NOT NULL,
+    idReporter TEXT,
+    FOREIGN KEY(remoteIdArea) REFERENCES area(remoteIdArea),
+    FOREIGN KEY(idReporter) REFERENCES user(remoteIdUser)
+);
+
+CREATE TABLE itemEntry(
+    localIdItemEntry INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
+    remoteIdItemEntry TEXT,
+    localIdItem TEXT NOT NULL,
+    idReporter TEXT NOT NULL,
+    createDate TEXT AS OffsetDateTime NOT NULL,
+    idItemType TEXT,
+    location TEXT AS Location,
+    stateId TEXT,
+    note TEXT,
+    FOREIGN KEY(localIdItem) REFERENCES item(localIdItem),
+    FOREIGN KEY(idReporter) REFERENCES user(remoteIdUser),
+    FOREIGN KEY(idItemType) REFERENCES itemType(remoteIdItemType)
+);
+
+CREATE TABLE property(
+    localIdProperty INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
+    propertyConfigId TEXT NOT NULL,
+    value TEXT NOT NULL,
+    FOREIGN KEY(propertyConfigId) REFERENCES propertyConfig(remoteIdPropertyConfig)
+);
+
+CREATE TABLE propertyConfig(
+    remoteIdPropertyConfig TEXT NOT NULL UNIQUE PRIMARY KEY,
+    propertyTypeId TEXT NOT NULL,
+    name TEXT NOT NULL DEFAULT "",
+    description TEXT NOT NULL DEFAULT "",
+    propertyType TEXT
+);
+
+CREATE TABLE photo(
+    localIdPhoto INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
+    remoteIdPhoto TEXT,
+    fileName TEXT,
+    filePath TEXT AS Uri
+);
+
+-- FUNCTIONS: USER TABLE ---------------------------------------------------------------------------
+insertUser:
+INSERT INTO user(remoteIdUser, email, firstName, lastName)
+VALUES (?,?,?,?);
+
+userIsPermittedForArea:
+INSERT INTO area_user(remoteIdUser, remoteIdArea)
+VALUES (?,?);
+
+getAllUser:
+SELECT * FROM user;
+
+getUserWithPermittedAreas:
+SELECT
+    user.remoteIdUser,
+    user.email,
+    user.firstName,
+    user.lastName,
+    group_concat(area.remoteIdArea)
+FROM area
+INNER JOIN area_user ON area.remoteIdArea = area_user.remoteIdArea
+INNER JOIN user ON area_user.remoteIdUser = user.remoteIdUser
+WHERE user.remoteIdUser = ?
+;
+
+
+
+getPermittedAreasForUser:
+SELECT
+    area.remoteIdArea ,
+    area.name ,
+    area.geoDbID ,
+    area.geoDbName ,
+    area.geoDbFilePath ,
+    area.geoDbCreateDate
+FROM area
+INNER JOIN area_user ON area.remoteIdArea = area_user.remoteIdArea
+INNER JOIN user ON area_user.remoteIdUser = user.remoteIdUser
+WHERE user.remoteIdUser = ?
+;
+
+-- FUNCTIONS: AREA TABLE ---------------------------------------------------------------------------
+insertArea:
+INSERT INTO area(remoteIdArea, name, geoDbID, geoDbName, geoDbFilePath, geoDbCreateDate)
+VALUES (?,? ,? ,? ,?,?);
+
+getAreas:
+SELECT * FROM area;
+
+
+-- FUNCTIONS: STATE TABLE --------------------------------------------------------------------------
+insertState:
+INSERT INTO state (remoteIdState, name, description)
+VALUES (?, ? , ?);
+
+getStates:
+SELECT * FROM state;
+
+
+

@@ -28,6 +28,12 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
 
 }
 
@@ -36,9 +42,14 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.core:core-ktx:$androidx_core_ktx_version"
 
+    //rx
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava2_rxjava_version"
+    implementation "io.reactivex.rxjava2:rxkotlin:$rxjava2_rxkotlin_version"
+
     // sqldelight
     implementation "com.squareup.sqldelight:android-driver:$sqldelight_version"
     testImplementation "com.squareup.sqldelight:sqlite-driver:$sqldelight_version"
+    implementation "com.squareup.sqldelight:rxjava2-extensions:$sqldelight_version"
 
     //injection
     implementation "org.koin:koin-android:$koin_version"
