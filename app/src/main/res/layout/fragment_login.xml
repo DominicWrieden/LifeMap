@@ -43,7 +43,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:text="@{viewmodel.userName}"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -62,7 +63,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:text="@{viewmodel.password}"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,6 +83,7 @@
             app:initialCornerAngle="0dp"
             android:textAllCaps="true"
             android:text="@string/login_fragment_login_button"
+            android:onClick="@{() -> viewmodel.onLoginClicked()}"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

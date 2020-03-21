@@ -6,5 +6,10 @@ import androidx.lifecycle.ViewModel
 
 class LoginViewModel: ViewModel() {
 
-    val text:LiveData<String> = MutableLiveData("Test")
+    val userName :LiveData<String> = MutableLiveData("Test")
+    val password :LiveData<String> = MutableLiveData("12345")
+
+    fun onLoginClicked() {
+
+    }
 }
