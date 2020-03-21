@@ -1,4 +1,4 @@
-package com.dominicwrieden.data.model
+package com.dominicwrieden.api.model
 
 enum class PropertyType{
     STRING,
@@ -13,8 +13,8 @@ enum class PropertyType{
  * and the api module {@link com.dominicwrieden.api}
  *
  * This represents a configured String|Int|Date property from the server. Will be used for the
- * Properties {@link com.dominicwrieden.data.model.Property} for an
- * assessment {@link com.dominicwrieden.data.model.ItemEntry} of an Item {@link com.dominicwrieden.data.model.Item}
+ * Properties {@link com.dominicwrieden.api.model.Property} for an
+ * assessment {@link com.dominicwrieden.api.model.ItemEntry} of an Item {@link com.dominicwrieden.api.model.Item}
  *
  * IMPORTANT: Do not use this model for the repositories, which are communicating with the app module
  */

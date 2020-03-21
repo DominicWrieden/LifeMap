@@ -1,4 +1,4 @@
-package com.dominicwrieden.data.model
+package com.dominicwrieden.api.model
 
 import org.threeten.bp.OffsetDateTime
 
@@ -13,11 +13,10 @@ import org.threeten.bp.OffsetDateTime
  * IMPORTANT: Do not use this model for the repositories, which are communicating with the app module
  */
 data class Item(
-    val localId: Int,
+    val localId: Long?,
     val remoteId: String?,
-    val area: Area,
+    val areaId: String,
     val createDate: OffsetDateTime,
-    val reporter: User,
+    val reporterId: String,
     val history: List<ItemEntry>
-
 )

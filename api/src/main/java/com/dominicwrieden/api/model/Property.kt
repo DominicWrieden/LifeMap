@@ -1,4 +1,4 @@
-package com.dominicwrieden.data.model
+package com.dominicwrieden.api.model
 
 import org.threeten.bp.OffsetDateTime
 
@@ -10,32 +10,36 @@ import org.threeten.bp.OffsetDateTime
  * and the api module {@link com.dominicwrieden.api}
  *
  * This represents a String|Int|Date property, which can be edited while an
- * assessment {@link com.dominicwrieden.data.model.ItemEntry}. It is corresponding to the
- * configured property from the server {@link com.dominicwrieden.data.model.PropertyConfig}.
+ * assessment {@link com.dominicwrieden.api.model.ItemEntry}. It is corresponding to the
+ * configured property from the server {@link com.dominicwrieden.api.model.PropertyConfig}.
  *
  * IMPORTANT: Do not use this model for the repositories, which are communicating with the app module
  */
 
 interface Property<out T> {
-    val localId: Int
-    val propertyType: PropertyConfig
+    val localId: Long?
+    val itemEntryId: Long?
+    val propertyConfigId: String
     val value: T
 }
 
 data class PropertyString(
-    override val localId: Int,
-    override val propertyType: PropertyConfig,
+    override val localId: Long?,
+    override val itemEntryId: Long?,
+    override val propertyConfigId: String,
     override val value: String
 ): Property<String>
 
 data class PropertyInt(
-    override val localId: Int,
-    override val propertyType: PropertyConfig,
+    override val localId: Long?,
+    override val itemEntryId: Long?,
+    override val propertyConfigId: String,
     override val value: Int
 ): Property<Int>
 
 data class PropertyDate(
-    override val localId: Int,
-    override val propertyType: PropertyConfig,
+    override val localId: Long?,
+    override val itemEntryId: Long?,
+    override val propertyConfigId: String,
     override val value: OffsetDateTime
 ): Property<OffsetDateTime>

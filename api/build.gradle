@@ -27,6 +27,25 @@ android {
         targetCompatibility = 1.8
     }
 
+    Properties properties = new Properties()
+    def propertiesFile = project.rootProject.file('local.properties')
+    if (propertiesFile.exists()) {
+        properties.load(propertiesFile.newDataInputStream())
+    }
+
+    flavorDimensions "server"
+
+    productFlavors {
+        oldAPI {
+            dimension "server"
+            buildConfigField 'String', 'API_BASE_URL', properties.getProperty('oldApiBaseUrl')
+        }
+
+        newAPI {
+            buildConfigField 'String', 'API_BASE_URL', ''
+        }
+    }
+
 }
 
 dependencies {
@@ -41,10 +60,10 @@ dependencies {
 
 
     //network
-    implementation "com.squareup.retrofit2:retrofit:$retrofit2_retrofit_version"
-    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$retrofit2_rxjava2_adapter_version"
     implementation "com.squareup.moshi:moshi:$moshi_version"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofit2_moshi_converter_version"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit2_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit2_version"
 
     //injection
     implementation "org.koin:koin-android:$koin_version"

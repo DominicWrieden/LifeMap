@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:text="@{viewmodel.userName}"/>
+                android:text="@={viewmodel.userName}"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:text="@{viewmodel.password}"/>
+                android:text="@={viewmodel.password}"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

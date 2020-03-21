@@ -34,10 +34,25 @@ android {
         }
     }
 
+    flavorDimensions "server"
+
+    productFlavors {
+        oldAPI {
+            dimension "server"
+        }
+
+        newAPI {
+            dimension "server"
+        }
+    }
+
 
 }
 
 dependencies {
+    api project(':api')
+
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.core:core-ktx:$androidx_core_ktx_version"

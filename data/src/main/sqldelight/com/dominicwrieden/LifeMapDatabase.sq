@@ -1,12 +1,13 @@
 import android.location.Location;
 import android.net.Uri;
+import com.dominicwrieden.api.model.PropertyType;
 import java.net.URI;
 import org.threeten.bp.OffsetDateTime;
 
 CREATE TABLE state (
     remoteIdState TEXT NOT NULL UNIQUE PRIMARY KEY,
-    name TEXT NOT NULL DEFAULT "",
-    description TEXT NOT NULL DEFAULT ""
+    name TEXT NOT NULL,
+    description TEXT NOT NULL
 );
 
 
@@ -36,8 +37,8 @@ CREATE TABLE area_user(
 
 CREATE TABLE itemType (
     remoteIdItemType TEXT NOT NULL UNIQUE PRIMARY KEY,
-    name TEXT NOT NULL DEFAULT "",
-    description TEXT NOT NULL DEFAULT ""
+    name TEXT NOT NULL,
+    description TEXT
 );
 
 
@@ -47,8 +48,8 @@ CREATE TABLE item (
     localIdItem INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
     remoteIdItem TEXT,
     remoteIdArea TEXT,
-    crateDate TEXT As OffsetDateTime NOT NULL,
-    idReporter TEXT,
+    createDate TEXT As OffsetDateTime NOT NULL,
+    idReporter TEXT NOT NULL,
     FOREIGN KEY(remoteIdArea) REFERENCES area(remoteIdArea),
     FOREIGN KEY(idReporter) REFERENCES user(remoteIdUser)
 );
@@ -61,26 +62,28 @@ CREATE TABLE itemEntry(
     createDate TEXT AS OffsetDateTime NOT NULL,
     idItemType TEXT,
     location TEXT AS Location,
-    stateId TEXT,
+    idState TEXT,
     note TEXT,
     FOREIGN KEY(localIdItem) REFERENCES item(localIdItem),
     FOREIGN KEY(idReporter) REFERENCES user(remoteIdUser),
-    FOREIGN KEY(idItemType) REFERENCES itemType(remoteIdItemType)
+    FOREIGN KEY(idItemType) REFERENCES itemType(remoteIdItemType),
+    FOREIGN KEY(idState) REFERENCES state(remoteIdState)
 );
 
 CREATE TABLE property(
     localIdProperty INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
+    localIdItemEntry INTEGER NOT NULL,
     propertyConfigId TEXT NOT NULL,
     value TEXT NOT NULL,
+    FOREIGN KEY(localIdItemEntry) REFERENCES itemEntry(localIdItemEntry),
     FOREIGN KEY(propertyConfigId) REFERENCES propertyConfig(remoteIdPropertyConfig)
 );
 
 CREATE TABLE propertyConfig(
     remoteIdPropertyConfig TEXT NOT NULL UNIQUE PRIMARY KEY,
-    propertyTypeId TEXT NOT NULL,
-    name TEXT NOT NULL DEFAULT "",
-    description TEXT NOT NULL DEFAULT "",
-    propertyType TEXT
+    name TEXT NOT NULL,
+    description TEXT,
+    propertyType TEXT AS PropertyType NOT NULL
 );
 
 CREATE TABLE photo(
@@ -92,17 +95,21 @@ CREATE TABLE photo(
 
 -- FUNCTIONS: USER TABLE ---------------------------------------------------------------------------
 insertUser:
-INSERT INTO user(remoteIdUser, email, firstName, lastName)
+INSERT OR REPLACE INTO user(remoteIdUser, email, firstName, lastName)
 VALUES (?,?,?,?);
 
-userIsPermittedForArea:
-INSERT INTO area_user(remoteIdUser, remoteIdArea)
+insertUserIsPermittedForArea:
+INSERT OR REPLACE INTO area_user(remoteIdUser, remoteIdArea)
 VALUES (?,?);
+
 
 getAllUser:
 SELECT * FROM user;
 
-getUserWithPermittedAreas:
+
+
+
+getUserWithPermittedAreas: -- Example for join with group_concat
 SELECT
     user.remoteIdUser,
     user.email,
@@ -114,8 +121,6 @@ INNER JOIN area_user ON area.remoteIdArea = area_user.remoteIdArea
 INNER JOIN user ON area_user.remoteIdUser = user.remoteIdUser
 WHERE user.remoteIdUser = ?
 ;
-
-
 
 getPermittedAreasForUser:
 SELECT
@@ -133,8 +138,8 @@ WHERE user.remoteIdUser = ?
 
 -- FUNCTIONS: AREA TABLE ---------------------------------------------------------------------------
 insertArea:
-INSERT INTO area(remoteIdArea, name, geoDbID, geoDbName, geoDbFilePath, geoDbCreateDate)
-VALUES (?,? ,? ,? ,?,?);
+INSERT OR REPLACE INTO area(remoteIdArea, name, geoDbID, geoDbName, geoDbFilePath, geoDbCreateDate)
+VALUES (?,?,?,?,?,?);
 
 getAreas:
 SELECT * FROM area;
@@ -142,11 +147,50 @@ SELECT * FROM area;
 
 -- FUNCTIONS: STATE TABLE --------------------------------------------------------------------------
 insertState:
-INSERT INTO state (remoteIdState, name, description)
-VALUES (?, ? , ?);
+INSERT OR REPLACE INTO state (remoteIdState, name, description)
+VALUES (?,?,?);
 
 getStates:
 SELECT * FROM state;
 
 
+-- FUNCTIONS: PROPERTY CONFIG TABLE ----------------------------------------------------------------
+insertPropertyConfig:
+INSERT OR REPLACE INTO propertyConfig(remoteIdPropertyConfig,name, description, propertyType)
+VALUES (?,?,?,?);
 
+
+getPropertyConfigs:
+SELECT * FROM propertyConfig;
+
+-- FUNCTIONS: ITEM TYPE TABLE ----------------------------------------------------------------------
+
+insertItemType:
+INSERT OR REPLACE INTO itemType (remoteIdItemType, name, description)
+VALUES (?,?,?);
+
+
+-- FUNCTIONS: ITEM TABLE ---------------------------------------------------------------------------
+
+insertItem:
+INSERT OR REPLACE INTO item (localIdItem, remoteIdItem, remoteIdArea,createDate, idReporter)
+VALUES (?,?,?,?,?);
+
+-- FUNCTIONS: ITEM ENTRY TABLE ---------------------------------------------------------------------
+
+insertItemEntry:
+INSERT OR REPLACE INTO itemEntry(localIdItemEntry,remoteIdItemEntry,localIdItem,idReporter,createDate,idItemType,location,idState,note)
+VALUES (?,?,?,?,?,?,?,?,?);
+
+-- FUNCTIONS: PROPERTY TABLE -----------------------------------------------------------------------
+
+insertProperty:
+INSERT OR REPLACE INTO property(localIdProperty, localIdItemEntry,propertyConfigId, value)
+VALUES (?,?,?,?);
+
+
+
+-- FUNCTIONS: OTHERS -------------------------------------------------------------------------------
+
+getAutoIncrementedIdFromLastInsert:
+SELECT last_insert_rowid();

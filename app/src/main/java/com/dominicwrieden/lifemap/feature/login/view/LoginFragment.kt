@@ -4,17 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.dominicwrieden.lifemap.R
 import com.dominicwrieden.lifemap.databinding.FragmentLoginBinding
 import com.dominicwrieden.lifemap.feature.login.viewmodel.LoginViewModel
-import kotlinx.android.synthetic.main.fragment_login.*
+import com.dominicwrieden.lifemap.util.observeWith
 import org.koin.android.viewmodel.ext.viewModel
 
 class LoginFragment : Fragment() {
-
 
     private val viewModel: LoginViewModel by viewModel()
 
@@ -30,6 +29,16 @@ class LoginFragment : Fragment() {
         binding.lifecycleOwner = this
 
         binding.viewmodel = viewModel
+
+        var toast:Toast? = null
+
+        viewModel.progress.observeWith(this) {
+            toast?.cancel()
+
+            toast=  Toast.makeText(requireActivity(), it, Toast.LENGTH_LONG)
+
+            toast?.show()
+        }
 
 
         return binding.root

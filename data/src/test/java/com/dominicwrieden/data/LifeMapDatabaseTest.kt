@@ -3,6 +3,7 @@ package com.dominicwrieden.data
 import com.dominicwrieden.*
 import com.dominicwrieden.util.sqldelight.LocationColumnAdapter
 import com.dominicwrieden.util.sqldelight.OffsetDateTimeColumnAdapter
+import com.dominicwrieden.util.sqldelight.PropertyTypeColumnAdapter
 import com.dominicwrieden.util.sqldelight.UriColumnAdapter
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import org.junit.Assert
@@ -24,7 +25,7 @@ class LifeMapDatabaseTest {
 
         ),
         itemAdapter = Item.Adapter(
-            crateDateAdapter = OffsetDateTimeColumnAdapter()
+            createDateAdapter = OffsetDateTimeColumnAdapter()
         ),
         itemEntryAdapter = ItemEntry.Adapter(
             createDateAdapter = OffsetDateTimeColumnAdapter(),
@@ -32,6 +33,9 @@ class LifeMapDatabaseTest {
         ),
         photoAdapter = Photo.Adapter(
             filePathAdapter = UriColumnAdapter()
+        ),
+        propertyConfigAdapter = PropertyConfig.Adapter(
+            propertyTypeAdapter = PropertyTypeColumnAdapter()
         )
     ).lifeMapDatabaseQueries
 

@@ -1,4 +1,4 @@
-package com.dominicwrieden.data.model
+package com.dominicwrieden.api.model
 
 /**
  * User model, which is corresponding to the database structure.
@@ -14,5 +14,5 @@ data class User(
     val email: String,
     val firstName: String,
     val lastName: String,
-    val permittedAreas: List<Area>
+    val permittedAreaIds: List<String>
 )

@@ -1,4 +1,4 @@
-package com.dominicwrieden.data.model
+package com.dominicwrieden.api.model
 
 import org.threeten.bp.OffsetDateTime
 
