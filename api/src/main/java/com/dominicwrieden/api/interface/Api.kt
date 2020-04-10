@@ -2,11 +2,14 @@ package com.dominicwrieden.api.`interface`
 
 import com.dominicwrieden.api.model.*
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 
 interface Api {
 
-    fun login(userName: String, password: String): Single<Response<Nothing>>
+    val authenticationStatus: Observable<AuthenticationStatus>
+
+    fun login(userName: String, password: String): Single<Response<User>>
 
     fun logout(): Completable
 
@@ -21,7 +24,4 @@ interface Api {
     fun getUsers(): Single<Response<List<User>>>
 
     fun getItems(areaId: String): Single<Response<List<Item>>>
-
-    //TODO get one item
-    //fun getItem(itemId: String, areaId: String): Single<Response<Item>>
 }

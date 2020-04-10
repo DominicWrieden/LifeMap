@@ -17,7 +17,7 @@ import org.threeten.bp.OffsetDateTime
 data class ItemEntry(
     val localId: Long?,
     val remoteId: String?,
-    val itemId: String,
+    val itemId: Long?,
     val reporterId: String,
     val reportDate: OffsetDateTime,
     val itemTypeId: String?,

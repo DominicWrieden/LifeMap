@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="AppTheme.Splash" parent="AppTheme">
+        <item name="android:statusBarColor">#ffffff</item>
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+    </style>
+
 </resources>
