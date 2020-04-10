@@ -17,7 +17,7 @@ CREATE TABLE area (
     geoDbID TEXT NOT NULL,
     geoDbName TEXT NOT NULL,
     geoDbFilePath TEXT,
-    geoDbCreateDate TEXT AS OffsetDateTime NOT NULL
+    geoDbCreateDate INTEGER AS OffsetDateTime NOT NULL
 );
 
 CREATE TABLE user (
@@ -48,7 +48,7 @@ CREATE TABLE item (
     localIdItem INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
     remoteIdItem TEXT,
     remoteIdArea TEXT,
-    createDate TEXT As OffsetDateTime NOT NULL,
+    createDate INTEGER As OffsetDateTime NOT NULL,
     idReporter TEXT NOT NULL,
     FOREIGN KEY(remoteIdArea) REFERENCES area(remoteIdArea),
     FOREIGN KEY(idReporter) REFERENCES user(remoteIdUser)
@@ -57,9 +57,9 @@ CREATE TABLE item (
 CREATE TABLE itemEntry(
     localIdItemEntry INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
     remoteIdItemEntry TEXT,
-    localIdItem TEXT NOT NULL,
+    localIdItem INTEGER NOT NULL,
     idReporter TEXT NOT NULL,
-    createDate TEXT AS OffsetDateTime NOT NULL,
+    createDate INTEGER AS OffsetDateTime NOT NULL,
     idItemType TEXT,
     location TEXT AS Location,
     idState TEXT,
@@ -98,18 +98,11 @@ insertUser:
 INSERT OR REPLACE INTO user(remoteIdUser, email, firstName, lastName)
 VALUES (?,?,?,?);
 
-insertUserIsPermittedForArea:
+insertUserArea:
 INSERT OR REPLACE INTO area_user(remoteIdUser, remoteIdArea)
 VALUES (?,?);
 
-
-getAllUser:
-SELECT * FROM user;
-
-
-
-
-getUserWithPermittedAreas: -- Example for join with group_concat
+getUser:
 SELECT
     user.remoteIdUser,
     user.email,
@@ -119,8 +112,7 @@ SELECT
 FROM area
 INNER JOIN area_user ON area.remoteIdArea = area_user.remoteIdArea
 INNER JOIN user ON area_user.remoteIdUser = user.remoteIdUser
-WHERE user.remoteIdUser = ?
-;
+WHERE user.remoteIdUser = ?;
 
 getPermittedAreasForUser:
 SELECT
@@ -133,8 +125,7 @@ SELECT
 FROM area
 INNER JOIN area_user ON area.remoteIdArea = area_user.remoteIdArea
 INNER JOIN user ON area_user.remoteIdUser = user.remoteIdUser
-WHERE user.remoteIdUser = ?
-;
+WHERE user.remoteIdUser = ?;
 
 -- FUNCTIONS: AREA TABLE ---------------------------------------------------------------------------
 insertArea:

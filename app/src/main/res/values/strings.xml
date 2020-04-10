@@ -5,4 +5,11 @@
     <string name="login_fragment_user_name_hint">Benutzername</string>
     <string name="login_fragment_password_hint">Passwort</string>
     <string name="login_fragment_login_button">Login</string>
+    <string name="login_fragment_user_name_error_format">Bitte geben Sie Ihren Benutzernamen ein</string>
+    <string name="login_fragment_password_error_format">Bitte geben Sie Ihr Passwort ein</string>
+    <string name="login_fragment_message_loading_authentication">Authentifizierung…</string>
+    <string name="login_fragment_message_loading_content">Inhalte werden heruntergeladen, dies kann bis zu einer Minute dauern…</string>
+    <string name="login_fragment_message_error_unkown">Es ist ein Fehler aufgetreten.</string>
+    <string name="login_fragment_message_error_no_network">Es ist ein Fehler aufgetreten.\nBitte überprüfen Sie Ihre Internetverbindung.</string>
+    <string name="login_fragment_message_error_authentication">Benutzername und/oder Passwort falsch.</string>
 </resources>

@@ -2,7 +2,6 @@ package com.dominicwrieden.api.model
 
 import okhttp3.ResponseBody
 import java.io.IOException
-import java.net.UnknownHostException
 
 /**
  * Represents the result of making a network request.
@@ -112,11 +111,11 @@ enum class StatusCode(val code: Int) {
 fun Int.codeStatus(): StatusCode =
     StatusCode.values().find { it.code == this } ?: StatusCode.Unknown
 
-//TODO in der neuen API ist Token invalid nicht 403 oder 401 sondern 500
+//TODO in der alten API ist Token invalid nicht 401 sondern 500
 fun <T : Any, U: Any> evaluateResponse(response: retrofit2.Response<T>, transform: (input:T) -> U): Response<U> {
     return if (response.isSuccessful && response.body() != null) {
         Response.Success(transform(response.body()!!))
-    } else if (response.code().codeStatus() == StatusCode.Forbidden) {
+    } else if (response.code().codeStatus() == StatusCode.Unauthorized) {
         Response.AuthenticationError(response.errorBody())
     } else {
         Response.ServerError(response.code(),response.errorBody())
@@ -124,7 +123,7 @@ fun <T : Any, U: Any> evaluateResponse(response: retrofit2.Response<T>, transfor
 }
 
 fun <T : Any> evaluateErrorResponse(exception: Throwable): Response<T> {
-    return if (exception is UnknownHostException) {
+    return if (exception is IOException ) {
         Response.NetworkError(exception)
     } else {
         Response.UnknownError(exception)

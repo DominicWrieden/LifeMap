@@ -3,10 +3,13 @@ package com.dominicwrieden
 import com.dominicwrieden.api.BuildConfig
 import com.dominicwrieden.api.`interface`.Api
 import com.dominicwrieden.api.implementation.old.ApiImpl
-import com.dominicwrieden.api.implementation.old.authentication.LoginService
-import com.dominicwrieden.api.implementation.old.authentication.retrofit.LoginApi
-import com.dominicwrieden.api.implementation.old.content.DownloadService
-import com.dominicwrieden.api.implementation.old.content.retrofit.DownloadApi
+import com.dominicwrieden.api.implementation.old.authentication.AuthenticationInterceptor
+import com.dominicwrieden.api.implementation.old.authentication.AuthenticationManager
+import com.dominicwrieden.api.implementation.old.authentication.AuthenticationService
+import com.dominicwrieden.api.implementation.old.authentication.source.local.AuthenticationSharedPreferences
+import com.dominicwrieden.api.implementation.old.authentication.source.retrofit.AuthenticationApi
+import com.dominicwrieden.api.implementation.old.content.ContentService
+import com.dominicwrieden.api.implementation.old.content.retrofit.ContentApi
 import com.dominicwrieden.api.util.MoshiAdapters
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
@@ -20,6 +23,9 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 val oldApiModule = module {
 
+    single { AuthenticationSharedPreferences(androidContext()) }
+    single { AuthenticationManager(get()) }
+
     single {
         Moshi.Builder()
             .add(MoshiAdapters)
@@ -28,7 +34,7 @@ val oldApiModule = module {
 
     single {
         OkHttpClient.Builder()
-            //.addInterceptor(get<AuthenticationInterceptor>()) //TODO AuthenticationInterceptor, für Tokenablauf
+            .addInterceptor(AuthenticationInterceptor(get(),get()))
             .build()
     }
 
@@ -41,10 +47,10 @@ val oldApiModule = module {
             .build()
     }
 
-    single { LoginService(get<Retrofit>().create(LoginApi::class.java), androidContext()) }
-    single {DownloadService(get<Retrofit>().create(DownloadApi::class.java), get())}
+    single { AuthenticationService(get<Retrofit>().create(AuthenticationApi::class.java), get()) }
+    single { ContentService(get<Retrofit>().create(ContentApi::class.java), get()) }
 
 
-    single { ApiImpl(get(),get()) } bind Api::class
+    single { ApiImpl(get(), get(), get()) } bind Api::class
 
 }
