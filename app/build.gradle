@@ -56,7 +56,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
+    implementation "androidx.appcompat:appcompat:${androidx_appcompat_version}"
     implementation "androidx.core:core-ktx:$androidx_core_ktx_version"
     implementation "com.android.support:multidex:$multidex_version"
     implementation "com.google.android.gms:play-services-auth:$google_play_services_version"
@@ -71,7 +71,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
     //ui
-    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+    implementation "androidx.constraintlayout:constraintlayout:${constraintlayout_version}"
     implementation "com.xwray:groupie:$groupie_version"
     implementation "com.xwray:groupie-kotlin-android-extensions:$groupie_version"
     implementation "com.xwray:groupie-databinding:$groupie_version"
