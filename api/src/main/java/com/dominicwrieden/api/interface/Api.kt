@@ -4,6 +4,7 @@ import com.dominicwrieden.api.model.*
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import java.io.File
 
 interface Api {
 
@@ -20,6 +21,8 @@ interface Api {
     fun getStates(): Single<Response<List<State>>>
 
     fun getAreas(): Single<Response<List<Area>>>
+
+    fun getGeoDB(areaId: String): Single<Response<File>>
 
     fun getUsers(): Single<Response<List<User>>>
 

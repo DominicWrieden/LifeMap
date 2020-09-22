@@ -16,6 +16,7 @@ CREATE TABLE area (
     name TEXT NOT NULL,
     geoDbID TEXT NOT NULL,
     geoDbName TEXT NOT NULL,
+    geoDbFileName TEXT NOT NULL,
     geoDbFilePath TEXT,
     geoDbCreateDate INTEGER AS OffsetDateTime NOT NULL
 );
@@ -61,7 +62,7 @@ CREATE TABLE itemEntry(
     idReporter TEXT NOT NULL,
     createDate INTEGER AS OffsetDateTime NOT NULL,
     idItemType TEXT,
-    location TEXT AS Location,
+    location TEXT AS Location NOT NULL,
     idState TEXT,
     note TEXT,
     FOREIGN KEY(localIdItem) REFERENCES item(localIdItem),
@@ -129,11 +130,17 @@ WHERE user.remoteIdUser = ?;
 
 -- FUNCTIONS: AREA TABLE ---------------------------------------------------------------------------
 insertArea:
-INSERT OR REPLACE INTO area(remoteIdArea, name, geoDbID, geoDbName, geoDbFilePath, geoDbCreateDate)
-VALUES (?,?,?,?,?,?);
+INSERT OR REPLACE INTO area(remoteIdArea, name, geoDbID, geoDbName, geoDbFilePath, geoDbFileName ,geoDbCreateDate)
+VALUES (?,?,?,?,?,?,?);
 
 getAreas:
 SELECT * FROM area;
+
+getArea:
+SELECT * FROM area WHERE remoteIdArea = ?;
+
+getGeoDbFileName:
+SELECT area.geoDbFileName FROM area WHERE area.remoteIdArea = ?;
 
 
 -- FUNCTIONS: STATE TABLE --------------------------------------------------------------------------
@@ -143,6 +150,7 @@ VALUES (?,?,?);
 
 getStates:
 SELECT * FROM state;
+
 
 
 -- FUNCTIONS: PROPERTY CONFIG TABLE ----------------------------------------------------------------
@@ -166,6 +174,16 @@ VALUES (?,?,?);
 insertItem:
 INSERT OR REPLACE INTO item (localIdItem, remoteIdItem, remoteIdArea,createDate, idReporter)
 VALUES (?,?,?,?,?);
+
+getAllItemsForArea:
+SELECT item.localIdItem, itemEntry.location, state.name FROM item
+INNER JOIN itemEntry
+ON item.localIdItem == itemEntry.localIdItem
+INNER JOIN state
+ON itemEntry.idState == state.remoteIdState
+WHERE item.remoteIdArea == ?
+GROUP BY item.remoteIdItem
+HAVING MAX(itemEntry.createDate);
 
 -- FUNCTIONS: ITEM ENTRY TABLE ---------------------------------------------------------------------
 

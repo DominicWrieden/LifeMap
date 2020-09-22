@@ -12,5 +12,6 @@
 
 
 
+    <color name="drawerIconBackground">#dbdbdb</color>
     <color name="errorText">#fc0000</color>
 </resources>

@@ -3,13 +3,17 @@ package com.dominicwrieden.data.repository.item
 import com.dominicwrieden.LifeMapDatabaseQueries
 import com.dominicwrieden.api.`interface`.Api
 import com.dominicwrieden.api.model.*
+import com.dominicwrieden.data.model.Result
+import com.dominicwrieden.data.model.queryToObservableResultMapToList
 import com.dominicwrieden.data.model.toTask
+import com.dominicwrieden.data.repository.item.model.AreaItem
+import io.reactivex.Observable
 import org.threeten.bp.OffsetDateTime
 
 class ItemRepositoryImpl(private val database: LifeMapDatabaseQueries, private val api: Api) :
     ItemRepository {
 
-    override fun downloadItemsForArea(areaId:String) = api.getItems(areaId)
+    override fun downloadItemsForArea(areaId: String) = api.getItems(areaId)
         .doOnSuccess { itemsResponse ->
             itemsResponse?.let {
                 when (it) {
@@ -18,6 +22,18 @@ class ItemRepositoryImpl(private val database: LifeMapDatabaseQueries, private v
             }
         }
         .toTask()
+
+    override fun getItemsForArea(areaId: String): Observable<Result<List<AreaItem>>> =
+        database.getAllItemsForArea(areaId)
+            .queryToObservableResultMapToList { itemsResult ->
+                itemsResult.map {
+                    AreaItem(
+                        itemId = it.localIdItem,
+                        location = it.location
+                    )
+                }
+            }
+
 
     private fun saveItem(item: Item) {
         saveItems(listOf(item))
@@ -47,7 +63,8 @@ class ItemRepositoryImpl(private val database: LifeMapDatabaseQueries, private v
 
         //merge all item entries to on list
         val allItemEntries = updatedItems.map { item ->
-            item.history.map { it.copy(itemId = item.localId) } }.flatten()
+            item.history.map { it.copy(itemId = item.localId) }
+        }.flatten()
 
         saveItemEntries(allItemEntries)
     }
@@ -77,19 +94,22 @@ class ItemRepositoryImpl(private val database: LifeMapDatabaseQueries, private v
                     when (property.value) {
                         is Int -> PropertyInt(
                             localId = property.localId,
-                            itemEntryId = database.getAutoIncrementedIdFromLastInsert().executeAsOne(),
+                            itemEntryId = database.getAutoIncrementedIdFromLastInsert()
+                                .executeAsOne(),
                             propertyConfigId = property.propertyConfigId,
                             value = property.value as Int
                         )
                         is OffsetDateTime -> PropertyDate(
                             localId = property.localId,
-                            itemEntryId = database.getAutoIncrementedIdFromLastInsert().executeAsOne(),
+                            itemEntryId = database.getAutoIncrementedIdFromLastInsert()
+                                .executeAsOne(),
                             propertyConfigId = property.propertyConfigId,
                             value = property.value as OffsetDateTime
                         )
                         is String -> PropertyString(
                             localId = property.localId,
-                            itemEntryId = database.getAutoIncrementedIdFromLastInsert().executeAsOne(),
+                            itemEntryId = database.getAutoIncrementedIdFromLastInsert()
+                                .executeAsOne(),
                             propertyConfigId = property.propertyConfigId,
                             value = property.value as String
                         )
@@ -115,7 +135,7 @@ class ItemRepositoryImpl(private val database: LifeMapDatabaseQueries, private v
                     localIdProperty = property.localId,
                     localIdItemEntry = property.itemEntryId!!,
                     propertyConfigId = property.propertyConfigId,
-                    value =  property.value.toString() // TODO Adapter schreiben, um Daten richtig in einen String umzuwandeln
+                    value = property.value.toString() // TODO Adapter schreiben, um Daten richtig in einen String umzuwandeln
                 )
             }
         }

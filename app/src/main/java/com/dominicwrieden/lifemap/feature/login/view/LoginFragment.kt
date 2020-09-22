@@ -8,6 +8,7 @@ import androidx.annotation.StringRes
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.dominicwrieden.lifemap.R
+import com.dominicwrieden.lifemap.core.BaseFragment
 import com.dominicwrieden.lifemap.databinding.FragmentLoginBinding
 import com.dominicwrieden.lifemap.feature.login.model.LoginButtonState
 import com.dominicwrieden.lifemap.feature.login.model.LoginMessageState
@@ -20,10 +21,9 @@ import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.android.viewmodel.ext.viewModel
 
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment() {
 
     private val viewModel: LoginViewModel by viewModel()
-    private val disposable = CompositeDisposable() //TODO outsource to base fragment
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -143,10 +143,5 @@ class LoginFragment : Fragment() {
     private fun showUserNameInitialState() {
         userName.isEnabled = true
         userNameLayout.error = null
-    }
-
-    override fun onDestroy() {
-        disposable.dispose()
-        super.onDestroy()
     }
 }

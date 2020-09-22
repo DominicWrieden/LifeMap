@@ -18,5 +18,6 @@ data class Area(
     val geoDbId: String,
     val geoDbName: String,
     val geoDbFilePath: String?,
+    val geoDbFileName: String,
     val geoDbCreateDate: OffsetDateTime
 )

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="areaItem"
+            type="com.dominicwrieden.data.repository.item.model.AreaItem" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/bg_navigation_drawer_area_item_gradient">
+
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/areaSelectionRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/areaName"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/areaName"
+            style="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/areaSelectionRadioButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/areaSelectionRadioButton"
+            app:layout_constraintTop_toTopOf="@id/areaSelectionRadioButton"
+            tools:text="Blockland 2019" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="areaSelectionRadioButton, areaName" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/areaUpdatedDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/areaSelectionRadioButton"
+            app:layout_constraintTop_toTopOf="@id/updateAreaButton"
+            tools:text="Aktualisiert: 20.04.2020" />
+
+        <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+            android:id="@+id/updateAreaButton"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:padding="0dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:src="@drawable/ic_menu_black_24dp"
+            android:text="Aktualisieren"
+            android:textColor="@color/colorPrimaryLight"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toEndOf="@id/areaUpdatedDate"
+            app:layout_constraintTop_toBottomOf="@id/barrierHeader" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

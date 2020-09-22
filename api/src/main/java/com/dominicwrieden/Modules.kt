@@ -11,6 +11,7 @@ import com.dominicwrieden.api.implementation.old.authentication.source.retrofit.
 import com.dominicwrieden.api.implementation.old.content.ContentService
 import com.dominicwrieden.api.implementation.old.content.retrofit.ContentApi
 import com.dominicwrieden.api.util.MoshiAdapters
+import com.oussaki.rxfilesdownloader.RxDownloader
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
@@ -19,6 +20,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.TimeUnit
 
 
 val oldApiModule = module {
@@ -35,8 +37,14 @@ val oldApiModule = module {
     single {
         OkHttpClient.Builder()
             .addInterceptor(AuthenticationInterceptor(get(),get()))
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS) //TODO refactoring: outsource this constant
+            .connectTimeout(30, TimeUnit.SECONDS)
             .build()
     }
+
+    factory { RxDownloader.Builder(androidContext())
+        .client(get())}
 
     single {
         Retrofit.Builder()
@@ -48,9 +56,8 @@ val oldApiModule = module {
     }
 
     single { AuthenticationService(get<Retrofit>().create(AuthenticationApi::class.java), get()) }
-    single { ContentService(get<Retrofit>().create(ContentApi::class.java), get()) }
+    single { ContentService(androidContext(),get<Retrofit>().create(ContentApi::class.java), get(),get()) }
 
 
     single { ApiImpl(get(), get(), get()) } bind Api::class
-
 }

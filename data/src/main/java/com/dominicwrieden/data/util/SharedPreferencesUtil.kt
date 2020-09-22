@@ -9,11 +9,11 @@ class SharedPreferencesUtil(
 ) {
 
     companion object {
-        const val SHARED_PREFERENCES_BVL_CONNECT = "SHARED_PREFERENCES_BVL_CONNECT"
+        const val SHARED_PREFERENCES_LIFE_MAP = "SHARED_PREFERENCES_LIFE_MAP"
     }
 
-    val sharedPreferences: SharedPreferences =
-        context.applicationContext.getSharedPreferences(SHARED_PREFERENCES_BVL_CONNECT,
+    private val sharedPreferences: SharedPreferences =
+        context.applicationContext.getSharedPreferences(SHARED_PREFERENCES_LIFE_MAP,
             Context.MODE_PRIVATE)
 
     fun retrieveFromSharedPreferences(key: String): String = sharedPreferences.getString(key, "")?:""
@@ -25,7 +25,7 @@ class SharedPreferencesUtil(
             .apply()
     }
 
-    fun clearInSharedPrefrences(key: String): Unit {
+    fun clearInSharedPreferences(key: String): Unit {
         saveToSharedPreferences(key, "")
     }
 }

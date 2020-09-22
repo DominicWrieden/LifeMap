@@ -7,10 +7,13 @@ import com.dominicwrieden.data.model.Error
 import com.dominicwrieden.data.model.Task
 import com.dominicwrieden.lifemap.R
 import com.dominicwrieden.lifemap.core.BaseViewModel
+import com.dominicwrieden.lifemap.core.Destination
+import com.dominicwrieden.lifemap.core.NavigationManager
 import com.dominicwrieden.lifemap.feature.login.model.LoginButtonState
 import com.dominicwrieden.lifemap.feature.login.model.LoginMessageState
 import com.dominicwrieden.lifemap.feature.login.model.LoginTextInputState
 import com.dominicwrieden.lifemap.usecase.area.DownloadAreasUseCase
+import com.dominicwrieden.lifemap.usecase.area.DownloadGeoDbForAreaUseCase
 import com.dominicwrieden.lifemap.usecase.authentication.LoginUseCase
 import com.dominicwrieden.lifemap.usecase.item.DownloadItemsUseCase
 import com.dominicwrieden.lifemap.usecase.itemtype.DownloadItemTypesUseCase
@@ -23,13 +26,15 @@ import io.reactivex.Single
 import io.reactivex.rxkotlin.addTo
 
 class LoginViewModel(
+    private val navigationManager: NavigationManager,
     private val loginUseCase: LoginUseCase,
     private val downloadAreasUseCase: DownloadAreasUseCase,
     private val downloadStatesUseCase: DownloadStatesUseCase,
     private val downloadUsersUseCase: DownloadUsersUseCase,
     private val downloadItemTypesUseCase: DownloadItemTypesUseCase,
     private val downloadPropertyConfigsUseCase: DownloadPropertyConfigsUseCase,
-    private val downloadItemsUseCase: DownloadItemsUseCase
+    private val downloadItemsUseCase: DownloadItemsUseCase,
+    private val downloadGeoDbForAreaUseCase: DownloadGeoDbForAreaUseCase
 
 ) : BaseViewModel() {
 
@@ -49,7 +54,6 @@ class LoginViewModel(
     val passwordInputState: LiveData<LoginTextInputState> = passwordInputStateRelay.toLiveData()
     val loginButtonState: LiveData<LoginButtonState> = loginButtonStateRelay.toLiveData()
     val messageState: LiveData<LoginMessageState> = messageStateRelay.toLiveData()
-
 
 
     @SuppressLint("CheckResult")
@@ -115,6 +119,7 @@ class LoginViewModel(
         }
     }
 
+    //TODO implement progress indication
     private fun downloadContent() {
         Single.concat(
             listOf(
@@ -123,7 +128,8 @@ class LoginViewModel(
                 downloadStatesUseCase.invoke(),
                 downloadPropertyConfigsUseCase.invoke(),
                 downloadItemTypesUseCase.invoke(),
-                downloadItemsUseCase.invoke()
+                downloadItemsUseCase.invoke(),
+                downloadGeoDbForAreaUseCase.invoke()
             )
         )
             .doOnSubscribe {
@@ -139,18 +145,19 @@ class LoginViewModel(
                     }
                 }
             }, {
+                loginFailed(Error.UNKNOWN) //TODO wirklich unkown?
             }).addTo(disposable)
     }
 
     private fun continueInApp() {
-        //TODO and delete the following:
-        userNameInputStateRelay.accept(LoginTextInputState.Initial)
-        passwordInputStateRelay.accept(LoginTextInputState.Initial)
-        loginButtonStateRelay.accept(LoginButtonState.Initial)
-        messageStateRelay.accept(LoginMessageState.Initial)
+        navigationManager.setNextDestination(Destination.Action(R.id.loginToMapNavigation))
     }
 
     private fun loginFailed(error: Error) {
+        //TODO clear database
+        //TODO clear login credentials
+
+
         userNameInputStateRelay.accept(LoginTextInputState.Initial)
         passwordInputStateRelay.accept(LoginTextInputState.Initial)
         loginButtonStateRelay.accept(LoginButtonState.Initial)

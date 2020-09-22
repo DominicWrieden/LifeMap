@@ -21,11 +21,10 @@ class DownloadItemsUseCaseImpl(
         .flatMap { resultUser ->
             when (resultUser) {
                 is Result.Success -> {
-                    Single.concat(resultUser.value.permittedAreaIds.map { areaId ->
-                        itemRepository.downloadItemsForArea(
-                            areaId
-                        )
-                    })
+                    Single.concat(resultUser.value.permittedAreaIds
+                        .map { areaId ->
+                            itemRepository.downloadItemsForArea(areaId)
+                        })
                         .toList()
                         .map { downloadItemTasks ->
                             if (downloadItemTasks.all { it is Task.Success }) {
@@ -38,5 +37,8 @@ class DownloadItemsUseCaseImpl(
                 }
                 is Result.Failure -> return@flatMap Single.just(Task.Failure(resultUser.error))
             }
+        }
+        .onErrorReturn {
+            Task.Failure(Error.UNKNOWN)
         }
 }

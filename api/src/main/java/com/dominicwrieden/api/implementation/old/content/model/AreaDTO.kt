@@ -15,6 +15,7 @@ internal fun AreaDTO.toArea() = Area(
     name = this.name,
     geoDbId = this.geoDBs.first()._id,
     geoDbName = this.geoDBs.first().name,
-    geoDbFilePath = this.geoDBs.first().filePath,
-    geoDbCreateDate = this.geoDBs.first().dateCreated
+    geoDbFileName = this.geoDBs.first().filePath,
+    geoDbCreateDate = this.geoDBs.first().dateCreated,
+    geoDbFilePath = null
 )

@@ -1,18 +1,26 @@
 package com.dominicwrieden.api.implementation.old.content
 
 import android.content.Context
-import com.dominicwrieden.api.implementation.old.authentication.AuthenticationService
+import com.dominicwrieden.api.BuildConfig
 import com.dominicwrieden.api.implementation.old.authentication.source.local.AuthenticationSharedPreferences
 import com.dominicwrieden.api.implementation.old.content.model.*
 import com.dominicwrieden.api.implementation.old.content.retrofit.ContentApi
 import com.dominicwrieden.api.model.*
+import com.oussaki.rxfilesdownloader.FileContainer
+import com.oussaki.rxfilesdownloader.RxDownloader
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import java.io.File
+import java.io.IOException
 
 
 //TODO: Es heißt hier immer getStatuses, aber man bekommt States zurück
-internal class ContentService(private val contentApi: ContentApi,
-                     private val authenticationSharedPreferences: AuthenticationSharedPreferences) {
+internal class ContentService(
+    private val context: Context,
+    private val contentApi: ContentApi,
+    private val rxDownloaderBuilder: RxDownloader.Builder,
+    private val authenticationSharedPreferences: AuthenticationSharedPreferences
+) {
 
 
     fun getAreas(): Single<Response<List<Area>>> = contentApi.getAreas()
@@ -23,6 +31,26 @@ internal class ContentService(private val contentApi: ContentApi,
             }
         }
         .onErrorReturn { evaluateErrorResponse(it) }
+
+    fun getGeoDBForArea(areaId: String): Single<Response<File>> =
+        rxDownloaderBuilder.addFile(BuildConfig.API_BASE_URL + "/geodatabases/${authenticationSharedPreferences.getToken()}/$areaId")//TODO auslagern
+            .build()
+            .asList()
+            .map { downloadedGeoDBs: MutableList<FileContainer> ->
+                downloadedGeoDBs.find { it.filename == areaId }?.file?.let { downloadedGeoDB ->
+
+                    //TODO because files aren't saved in cache
+                    val file = File(context.filesDir, downloadedGeoDB.name)
+
+                    Response.Success(file)
+                } ?: Response.UnknownError(NullPointerException())
+            }.onErrorReturn { exception ->
+                if (exception is IOException) {
+                    Response.NetworkError(exception)
+                } else {
+                    Response.UnknownError(exception)
+                }
+            }
 
 
     fun getSpecies(): Single<Response<List<ItemType>>> = contentApi.getSpecies()

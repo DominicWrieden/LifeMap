@@ -1,13 +1,13 @@
 package com.dominicwrieden.data.repository.user
 
-import com.dominicwrieden.Area
 import com.dominicwrieden.LifeMapDatabaseQueries
 import com.dominicwrieden.api.`interface`.Api
+import com.dominicwrieden.api.model.Area
 import com.dominicwrieden.api.model.Response
+import com.dominicwrieden.data.model.Result
+import com.dominicwrieden.data.model.queryToSingleResultMapToList
 import com.dominicwrieden.data.model.toTask
-import com.squareup.sqldelight.runtime.rx.asObservable
-import com.squareup.sqldelight.runtime.rx.mapToList
-import io.reactivex.Observable
+import io.reactivex.Single
 
 class UserRepositoryImpl(private val database: LifeMapDatabaseQueries, private val api: Api) :
     UserRepository {
@@ -22,8 +22,19 @@ class UserRepositoryImpl(private val database: LifeMapDatabaseQueries, private v
             }
         }.toTask()
 
-    override fun getPermittedAreasForUser(userRemoteId: String): Observable<List<Area>> =
-        database.getPermittedAreasForUser(userRemoteId).asObservable().mapToList()
+    override fun getPermittedAreasForUser(userRemoteId: String): Single<Result<List<Area>>> =
+        database.getPermittedAreasForUser(userRemoteId)
+            .queryToSingleResultMapToList {
+                com.dominicwrieden.api.model.Area(
+                    remoteId = it.remoteIdArea,
+                    name = it.name,
+                    geoDbId = it.geoDbID,
+                    geoDbName = it.geoDbName,
+                    geoDbFileName = it.geoDbName,
+                    geoDbFilePath = it.geoDbFilePath,
+                    geoDbCreateDate = it.geoDbCreateDate
+                )
+            }
 
     private fun saveUser(user: com.dominicwrieden.api.model.User) {
         saveUsers(listOf(user))

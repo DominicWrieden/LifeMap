@@ -8,4 +8,6 @@ sealed class AuthenticationStatus {
     ) : AuthenticationStatus()
 
     object LoggedOut : AuthenticationStatus()
+
+    object AuthenticationRevoked : AuthenticationStatus()
 }

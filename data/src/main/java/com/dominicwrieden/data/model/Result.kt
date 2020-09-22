@@ -1,6 +1,10 @@
 package com.dominicwrieden.data.model
 
 import com.dominicwrieden.api.model.Response
+import com.squareup.sqldelight.Query
+import com.squareup.sqldelight.runtime.rx.asObservable
+import com.squareup.sqldelight.runtime.rx.mapToList
+import com.squareup.sqldelight.runtime.rx.mapToOne
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -21,7 +25,7 @@ sealed class Result<T> {
 
 @Suppress("USELESS_CAST")
 fun <T : Any> Observable<Response<T>>.toResult(): Observable<Result<T>> =
-    this.map {response ->
+    this.map { response ->
         when (response) {
             is Response.Success -> Result.Success(response.body) as Result<T>
             is Response.ServerError -> Result.Failure(Error.SERVER_ERROR)
@@ -33,6 +37,38 @@ fun <T : Any> Observable<Response<T>>.toResult(): Observable<Result<T>> =
     }.onErrorReturn {
         Result.Failure(Error.UNKNOWN)
     }
+
+@Suppress("USELESS_CAST")
+fun <T : Any, U : Any> Query<T>.queryToSingleResultMapToOne(transform: (input: T) -> U): Single<Result<U>> =
+    this.asObservable()
+        .mapToOne()
+        .firstOrError()
+        .map { query ->
+            Result.Success(transform(query)) as Result<U>
+        }
+        .onErrorReturn { error ->
+            when (error) {
+                is NullPointerException -> Result.Failure(Error.DATABASE_ERROR)
+                is IllegalStateException -> Result.Failure(Error.DATABASE_ERROR)
+                else -> Result.Failure(Error.UNKNOWN)
+            }
+        }
+
+@Suppress("USELESS_CAST", "UNCHECKED_CAST")
+fun <T : Any, U : Any> Query<T>.queryToSingleResultMapToList(transform: (input: T) -> U): Single<Result<List<U>>> =
+    this.asObservable()
+        .mapToList()
+        .firstOrError()
+        .map { query ->
+            Result.Success(query.map { transform(it) }) as Result<List<U>>
+        }
+        .onErrorReturn { error ->
+            when (error) {
+                is NullPointerException -> Result.Failure(Error.DATABASE_ERROR)
+                is IllegalStateException -> Result.Failure(Error.DATABASE_ERROR)
+                else -> Result.Failure(Error.UNKNOWN)
+            }
+        }
 
 
 @Suppress("USELESS_CAST")
@@ -48,3 +84,20 @@ fun <T : Any> Single<Response<T>>.toResult(): Single<Result<T>> =
     }.onErrorReturn {
         Result.Failure(Error.UNKNOWN)
     }
+
+
+
+@Suppress("USELESS_CAST")
+fun <T : Any, U : Any> Query<T>.queryToObservableResultMapToList(transform: (input: List<T>) -> List<U>): Observable<Result<List<U>>> =
+    this.asObservable()
+        .mapToList()
+        .map { query ->
+            Result.Success(transform(query)) as Result<List<U>>
+        }
+        .onErrorReturn { error ->
+            when (error) {
+                is NullPointerException -> Result.Failure(Error.DATABASE_ERROR)
+                is IllegalStateException -> Result.Failure(Error.DATABASE_ERROR)
+                else -> Result.Failure(Error.UNKNOWN)
+            }
+        }

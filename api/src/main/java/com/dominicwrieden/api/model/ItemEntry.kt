@@ -21,7 +21,7 @@ data class ItemEntry(
     val reporterId: String,
     val reportDate: OffsetDateTime,
     val itemTypeId: String?,
-    val location: Location?,
+    val location: Location,
     val stateId: String?,
     val note: String?,
     val photoIds: List<String>,

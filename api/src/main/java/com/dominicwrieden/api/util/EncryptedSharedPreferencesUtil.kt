@@ -9,13 +9,13 @@ class EncryptedSharedPreferencesUtil(
 ) {
 
     companion object {
-        private const val SHARED_PREFERENCES_FILE_NAME = "SHARED_PREFERENCES_LIFE_MAP"
+        private const val SHARED_PREFERENCES_LIFE_MAP_API = "SHARED_PREFERENCES_LIFE_MAP_API"
     }
 
     private val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
 
     private val sharedPreferences = EncryptedSharedPreferences.create(
-        SHARED_PREFERENCES_FILE_NAME,
+        SHARED_PREFERENCES_LIFE_MAP_API,
         masterKeyAlias,
         context,
         EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,

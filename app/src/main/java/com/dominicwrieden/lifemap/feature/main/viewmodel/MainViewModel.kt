@@ -1,32 +1,35 @@
 package com.dominicwrieden.lifemap.feature.main.viewmodel
 
+import androidx.annotation.NavigationRes
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.dominicwrieden.api.model.AuthenticationStatus
 import com.dominicwrieden.data.repository.authentication.AuthenticationRepository
+import com.dominicwrieden.lifemap.R
 import com.dominicwrieden.lifemap.core.BaseViewModel
-import com.dominicwrieden.lifemap.feature.main.model.StartScreen
+import com.dominicwrieden.lifemap.core.Destination
+import com.dominicwrieden.lifemap.core.NavigationManager
 import com.dominicwrieden.lifemap.util.Event
-import com.dominicwrieden.lifemap.util.toLiveData
+import com.dominicwrieden.lifemap.util.toUnsubscribedEventLiveData
 
-class MainViewModel(private val authenticationRepository: AuthenticationRepository) : BaseViewModel() {
+class MainViewModel(
+    private val authenticationRepository: AuthenticationRepository,
+    private val navigationManager: NavigationManager
+) : BaseViewModel() {
+
+    val startDestination: LiveData<Event<Int>> = authenticationRepository.authenticationStatus
+        .firstOrError()
+        .map { authenticationStatus ->
+            when (authenticationStatus) {
+                is AuthenticationStatus.LoggedIn -> R.id.mapFragment
+                else -> R.id.loginFragment
+            }
+        }.onErrorReturn {
+            //TODO do logout
+            R.id.loginButton
+        }
+        .toUnsubscribedEventLiveData(disposable)
 
 
-    val startScreen: LiveData<Event<StartScreen>> = MutableLiveData(
-        authenticationRepository.authenticationStatus
-            .map { status ->
-                Event(
-                    when (status) {
-                        is AuthenticationStatus.LoggedIn -> StartScreen.Map
-                        AuthenticationStatus.LoggedOut -> StartScreen.Login
-                    }
-                )
-            }.blockingFirst(Event(StartScreen.Login))
-    )
-
-    val logout: LiveData<Event<Unit>> = authenticationRepository.authenticationStatus
-        .filter { it is AuthenticationStatus.LoggedOut }
-        .map { Event(Unit) }
-        .toLiveData()
-
+    val destination: LiveData<Event<Destination>> =
+        navigationManager.destination.toUnsubscribedEventLiveData(disposable)
 }

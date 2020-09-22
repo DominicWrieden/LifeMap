@@ -15,6 +15,7 @@ import com.dominicwrieden.data.repository.state.StateRepository
 import com.dominicwrieden.data.repository.state.StateRepositoryImpl
 import com.dominicwrieden.data.repository.user.UserRepository
 import com.dominicwrieden.data.repository.user.UserRepositoryImpl
+import com.dominicwrieden.data.util.FileManager
 import com.dominicwrieden.data.util.SharedPreferencesUtil
 import com.dominicwrieden.data.util.sqldelight.LocationColumnAdapter
 import com.dominicwrieden.data.util.sqldelight.OffsetDateTimeColumnAdapter
@@ -61,6 +62,10 @@ val dataModule = module {
         SharedPreferencesUtil(androidContext())
     }
 
+    single<FileManager>{
+        FileManager(androidContext())
+    }
+
     single<AuthenticationRepository> {
         AuthenticationRepositoryImpl(
             get(),
@@ -78,6 +83,7 @@ val dataModule = module {
 
     single<AreaRepository> {
         AreaRepositoryImpl(
+            get(),
             get(),
             get()
         )

@@ -25,4 +25,6 @@ internal interface ContentApi {
     @GET("/clutches/{token}?withhistory=true")
     fun getClutches(@Path("token") token: String, @Query("area") areaId: String): Single<Response<List<List<ClutchDTO>>>>
 
+    @GET("/geodatabases/{token}/{filePath}")
+    fun getGeoDBFileForArea(@Path("token") token: String, @Path("filePath") areaId: String)
 }

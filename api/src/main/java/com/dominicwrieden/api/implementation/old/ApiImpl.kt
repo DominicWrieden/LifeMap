@@ -9,6 +9,7 @@ import com.jakewharton.rxrelay2.BehaviorRelay
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import java.io.File
 
 internal class ApiImpl(
     private val authenticationService: AuthenticationService,
@@ -39,7 +40,7 @@ internal class ApiImpl(
     override fun getStates(): Single<Response<List<State>>> = contentService.getStatuses()
 
     override fun getAreas(): Single<Response<List<Area>>> = contentService.getAreas()
-
+    override fun getGeoDB(areaId: String): Single<Response<File>> = contentService.getGeoDBForArea(areaId)
 
     override fun getUsers(): Single<Response<List<User>>> = contentService.getUsers()
 

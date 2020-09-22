@@ -2,15 +2,22 @@ package com.dominicwrieden.lifemap.feature.main.view
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.Menu
-import android.widget.Toast
+import android.view.Gravity
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.navigation.findNavController
-import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.dominicwrieden.lifemap.R
-import com.dominicwrieden.lifemap.feature.main.model.StartScreen
+import com.dominicwrieden.lifemap.core.Destination
+import com.dominicwrieden.lifemap.core.Destination.Action
+import com.dominicwrieden.lifemap.core.Destination.NavigationDirection
 import com.dominicwrieden.lifemap.feature.main.viewmodel.MainViewModel
+import com.dominicwrieden.lifemap.util.Event
 import com.dominicwrieden.lifemap.util.observeWith
+import com.jakewharton.rxbinding2.view.clicks
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
+import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -19,54 +26,58 @@ class MainActivity : AppCompatActivity() {
 
     private val navController by lazy { findNavController(R.id.nav_host_fragment) }
 
+    private val disposable = CompositeDisposable()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.AppTheme)
         setContentView(R.layout.activity_main)
 
-        viewModel.startScreen.observeWith(this) {
-            it.getContentIfNotHandled()?.let{startScreen ->
-                when (startScreen) {
-                    StartScreen.Login -> {
-                        navController.navigate(R.id.loginFragment)
-                        Toast.makeText(this, "Logged out!", Toast.LENGTH_LONG).show()
+        setUpNavigation()
+
+        setUpNavigationDrawer()
+    }
+
+    @SuppressLint("ResourceType")
+    private fun setUpNavigationDrawer() {
+        //set up navigation drawer icon
+        drawerIcon.clicks().subscribe {
+            drawer_layout.openDrawer(Gravity.START)
+        }.addTo(disposable)
+
+
+    }
+
+    private fun setUpNavigation() {
+        val navHostFragment = nav_host_fragment as NavHostFragment
+        val graphInflater = navHostFragment.navController.navInflater
+        val navGraph = graphInflater.inflate(R.navigation.nav_graph)
+
+
+        viewModel.startDestination.observeWith(this) { startDestinationEvent ->
+            navGraph.startDestination =
+                startDestinationEvent.getContentIfNotHandled() ?: R.id.loginFragment
+            navController.graph = navGraph
+
+            viewModel.destination.observeWith(this) { destinationEvent: Event<Destination> ->
+                destinationEvent.getContentIfNotHandled()?.let { destination: Destination ->
+                    when (destination) {
+                        is Action -> navController.navigate(destination.actionId)
+                        is NavigationDirection -> navController.navigate(destination.navigationDirection)
+
                     }
-                    StartScreen.Map -> Toast.makeText(this, "Logged in!", Toast.LENGTH_LONG).show()
                 }
             }
         }
 
-        viewModel.logout.observeWith(this) {
-            it.getContentIfNotHandled()?.let {
-                navController.navigate(R.id.loginFragment)
-            }
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        setUpToolbar(menu)
-        return true
-    }
-
-    @SuppressLint("RestrictedApi")
-    private fun setUpToolbar(menu: Menu?) {
-        setupActionBarWithNavController(navController)
-        supportActionBar?.setShowHideAnimationEnabled(false)
-
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id != R.id.loginFragment) {
-                menu?.clear()
-                menuInflater.inflate(R.menu.toolbar, menu)
-                supportActionBar?.show()
-            } else {
-                menu?.clear()
-                supportActionBar?.hide()
-            }
+            drawerIcon.isVisible = destination.id != R.id.loginFragment
         }
     }
 
-    //TODO Still to discuss on which screen an up button is present
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp()
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.dispose()
     }
 }
