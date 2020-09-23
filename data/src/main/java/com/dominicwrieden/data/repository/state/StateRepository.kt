@@ -1,7 +1,7 @@
 package com.dominicwrieden.data.repository.state
 
 import com.dominicwrieden.data.model.Task
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 
 interface StateRepository {
 

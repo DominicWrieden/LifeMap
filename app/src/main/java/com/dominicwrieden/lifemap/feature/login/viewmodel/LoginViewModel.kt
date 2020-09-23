@@ -21,9 +21,9 @@ import com.dominicwrieden.lifemap.usecase.propertyconfig.DownloadPropertyConfigs
 import com.dominicwrieden.lifemap.usecase.state.DownloadStatesUseCase
 import com.dominicwrieden.lifemap.usecase.user.DownloadUsersUseCase
 import com.dominicwrieden.lifemap.util.toLiveData
-import com.jakewharton.rxrelay2.BehaviorRelay
-import io.reactivex.Single
-import io.reactivex.rxkotlin.addTo
+import com.jakewharton.rxrelay3.BehaviorRelay
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.kotlin.addTo
 
 class LoginViewModel(
     private val navigationManager: NavigationManager,

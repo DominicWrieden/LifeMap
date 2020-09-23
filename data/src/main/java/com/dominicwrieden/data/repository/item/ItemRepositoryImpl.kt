@@ -7,7 +7,7 @@ import com.dominicwrieden.data.model.Result
 import com.dominicwrieden.data.model.queryToObservableResultMapToList
 import com.dominicwrieden.data.model.toTask
 import com.dominicwrieden.data.repository.item.model.AreaItem
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import org.threeten.bp.OffsetDateTime
 
 class ItemRepositoryImpl(private val database: LifeMapDatabaseQueries, private val api: Api) :

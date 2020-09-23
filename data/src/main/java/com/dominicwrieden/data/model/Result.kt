@@ -2,11 +2,11 @@ package com.dominicwrieden.data.model
 
 import com.dominicwrieden.api.model.Response
 import com.squareup.sqldelight.Query
-import com.squareup.sqldelight.runtime.rx.asObservable
-import com.squareup.sqldelight.runtime.rx.mapToList
-import com.squareup.sqldelight.runtime.rx.mapToOne
-import io.reactivex.Observable
-import io.reactivex.Single
+import com.squareup.sqldelight.runtime.rx3.asObservable
+import com.squareup.sqldelight.runtime.rx3.mapToList
+import com.squareup.sqldelight.runtime.rx3.mapToOne
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 
 
 /**

@@ -10,11 +10,11 @@ import com.dominicwrieden.data.model.Result
 import com.dominicwrieden.data.model.Task
 import com.dominicwrieden.data.model.toTask
 import com.dominicwrieden.data.util.SharedPreferencesUtil
-import com.squareup.sqldelight.runtime.rx.asObservable
-import com.squareup.sqldelight.runtime.rx.mapToOne
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
+import com.squareup.sqldelight.runtime.rx3.asObservable
+import com.squareup.sqldelight.runtime.rx3.mapToOne
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 
 class AuthenticationRepositoryImpl(private val database: LifeMapDatabaseQueries, val api: Api, val sharedPreferencesUtil: SharedPreferencesUtil):
     AuthenticationRepository {
@@ -41,6 +41,7 @@ class AuthenticationRepositoryImpl(private val database: LifeMapDatabaseQueries,
         .mapToOne()
         .firstOrError()
         .map {
+            @Suppress("USELESS_CAST")
             Result.Success(
                 User(
                     remoteId = it.remoteIdUser,

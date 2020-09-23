@@ -1,7 +1,7 @@
 package com.dominicwrieden.data.model
 
 import com.dominicwrieden.api.model.Response
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 
 /**
  * For calls, where it is just important if it's successful or not

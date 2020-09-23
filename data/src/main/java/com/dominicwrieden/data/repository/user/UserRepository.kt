@@ -3,7 +3,7 @@ package com.dominicwrieden.data.repository.user
 import com.dominicwrieden.api.model.Area
 import com.dominicwrieden.data.model.Result
 import com.dominicwrieden.data.model.Task
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 
 interface UserRepository {
 

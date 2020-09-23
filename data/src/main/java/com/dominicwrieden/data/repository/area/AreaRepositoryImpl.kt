@@ -6,7 +6,7 @@ import com.dominicwrieden.api.model.Area
 import com.dominicwrieden.api.model.Response
 import com.dominicwrieden.data.model.*
 import com.dominicwrieden.data.util.FileManager
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import java.io.File
 
 class AreaRepositoryImpl(private val database: LifeMapDatabaseQueries,

@@ -5,7 +5,7 @@ import com.dominicwrieden.data.model.Result
 import com.dominicwrieden.data.model.Task
 import com.dominicwrieden.data.repository.item.ItemRepository
 import com.dominicwrieden.lifemap.usecase.authentication.GetLoggedInUserUseCase
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 
 
 interface DownloadItemsUseCase {

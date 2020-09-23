@@ -3,7 +3,7 @@ package com.dominicwrieden.lifemap.usecase.item
 import com.dominicwrieden.data.model.Result
 import com.dominicwrieden.data.repository.item.ItemRepository
 import com.dominicwrieden.data.repository.item.model.AreaItem
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 interface GetItemsForAreaUseCase {
     operator fun invoke(areaId: String): Observable<Result<List<AreaItem>>>

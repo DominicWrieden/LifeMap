@@ -7,7 +7,7 @@ import com.dominicwrieden.api.model.Response
 import com.dominicwrieden.data.model.Result
 import com.dominicwrieden.data.model.queryToSingleResultMapToList
 import com.dominicwrieden.data.model.toTask
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 
 class UserRepositoryImpl(private val database: LifeMapDatabaseQueries, private val api: Api) :
     UserRepository {
@@ -25,7 +25,7 @@ class UserRepositoryImpl(private val database: LifeMapDatabaseQueries, private v
     override fun getPermittedAreasForUser(userRemoteId: String): Single<Result<List<Area>>> =
         database.getPermittedAreasForUser(userRemoteId)
             .queryToSingleResultMapToList {
-                com.dominicwrieden.api.model.Area(
+                Area(
                     remoteId = it.remoteIdArea,
                     name = it.name,
                     geoDbId = it.geoDbID,

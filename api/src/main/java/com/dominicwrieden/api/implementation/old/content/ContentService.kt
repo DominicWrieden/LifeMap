@@ -1,24 +1,19 @@
 package com.dominicwrieden.api.implementation.old.content
 
-import android.content.Context
-import com.dominicwrieden.api.BuildConfig
 import com.dominicwrieden.api.implementation.old.authentication.source.local.AuthenticationSharedPreferences
 import com.dominicwrieden.api.implementation.old.content.model.*
 import com.dominicwrieden.api.implementation.old.content.retrofit.ContentApi
 import com.dominicwrieden.api.model.*
-import com.oussaki.rxfilesdownloader.FileContainer
-import com.oussaki.rxfilesdownloader.RxDownloader
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
-import java.io.File
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
+import okhttp3.ResponseBody
 import java.io.IOException
+import java.io.InputStream
 
 
 //TODO: Es heißt hier immer getStatuses, aber man bekommt States zurück
 internal class ContentService(
-    private val context: Context,
     private val contentApi: ContentApi,
-    private val rxDownloaderBuilder: RxDownloader.Builder,
     private val authenticationSharedPreferences: AuthenticationSharedPreferences
 ) {
 
@@ -32,18 +27,13 @@ internal class ContentService(
         }
         .onErrorReturn { evaluateErrorResponse(it) }
 
-    fun getGeoDBForArea(areaId: String): Single<Response<File>> =
-        rxDownloaderBuilder.addFile(BuildConfig.API_BASE_URL + "/geodatabases/${authenticationSharedPreferences.getToken()}/$areaId")//TODO auslagern
-            .build()
-            .asList()
-            .map { downloadedGeoDBs: MutableList<FileContainer> ->
-                downloadedGeoDBs.find { it.filename == areaId }?.file?.let { downloadedGeoDB ->
-
-                    //TODO because files aren't saved in cache
-                    val file = File(context.filesDir, downloadedGeoDB.name)
-
-                    Response.Success(file)
-                } ?: Response.UnknownError(NullPointerException())
+    fun getGeoDBForArea(areaId: String): Single<Response<InputStream>> =
+        contentApi.getGeoDBFileForArea(authenticationSharedPreferences.getToken(), areaId)
+            .subscribeOn(Schedulers.io())
+            .map {
+                evaluateResponse(it) { geoDBResponseBody: ResponseBody ->
+                    geoDBResponseBody.byteStream()
+                }
             }.onErrorReturn { exception ->
                 if (exception is IOException) {
                     Response.NetworkError(exception)
@@ -51,7 +41,6 @@ internal class ContentService(
                     Response.UnknownError(exception)
                 }
             }
-
 
     fun getSpecies(): Single<Response<List<ItemType>>> = contentApi.getSpecies()
         .subscribeOn(Schedulers.io())
@@ -84,7 +73,7 @@ internal class ContentService(
         .onErrorReturn { evaluateErrorResponse(it) }
 
 
-    fun getItems(areaId: String) =
+    fun getItems(areaId: String): Single<Response<List<Item>>> =
         contentApi.getClutches(authenticationSharedPreferences.getToken(), areaId)
             .subscribeOn(Schedulers.io())
             .map { evaluateResponse(it) { it } }
@@ -116,7 +105,7 @@ internal class ContentService(
             }
             .onErrorReturn { evaluateErrorResponse(it) }
 
-    fun getPropertyConfigs() = Single.just(
+    fun getPropertyConfigs(): Single<Response<List<PropertyConfig>>> = Single.just(
         Response.Success(
             listOf(
                 PropertyConfig(

@@ -7,6 +7,7 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 
 @Suppress("unused")
 class App : Application() {
@@ -23,7 +24,7 @@ class App : Application() {
         startKoin {
 
             androidContext(this@App)
-            androidLogger()
+            androidLogger(Level.ERROR)
 
             modules(
                 listOf(

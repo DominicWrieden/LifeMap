@@ -6,8 +6,8 @@ import com.dominicwrieden.api.model.Response
 import com.dominicwrieden.api.model.User
 import com.dominicwrieden.api.model.evaluateErrorResponse
 import com.dominicwrieden.api.model.evaluateResponse
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 internal class AuthenticationService(
     private val authenticationApi: AuthenticationApi,
@@ -33,8 +33,8 @@ internal class AuthenticationService(
                     }
                 }
             }
-            .map {
-                evaluateResponse(it) {it.user.toUser()} as Response<User>
+            .map { loginResponse ->
+                evaluateResponse(loginResponse) {it.user.toUser()}
             }
             .onErrorReturn { evaluateErrorResponse(it) }
 

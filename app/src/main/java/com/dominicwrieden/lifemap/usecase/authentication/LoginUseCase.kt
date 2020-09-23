@@ -2,7 +2,7 @@ package com.dominicwrieden.lifemap.usecase.authentication
 
 import com.dominicwrieden.data.model.Task
 import com.dominicwrieden.data.repository.authentication.AuthenticationRepository
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 
 
 interface LoginUseCase {

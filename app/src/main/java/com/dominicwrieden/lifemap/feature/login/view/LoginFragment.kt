@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import com.dominicwrieden.lifemap.R
 import com.dominicwrieden.lifemap.core.BaseFragment
 import com.dominicwrieden.lifemap.databinding.FragmentLoginBinding
@@ -15,11 +15,10 @@ import com.dominicwrieden.lifemap.feature.login.model.LoginMessageState
 import com.dominicwrieden.lifemap.feature.login.model.LoginTextInputState
 import com.dominicwrieden.lifemap.feature.login.viewmodel.LoginViewModel
 import com.dominicwrieden.lifemap.util.observeWith
-import com.jakewharton.rxbinding2.widget.textChanges
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
+import com.jakewharton.rxbinding4.widget.textChanges
+import io.reactivex.rxjava3.kotlin.addTo
 import kotlinx.android.synthetic.main.fragment_login.*
-import org.koin.android.viewmodel.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class LoginFragment : BaseFragment() {
 
@@ -91,13 +90,13 @@ class LoginFragment : BaseFragment() {
 
     private fun showLoginMessageErrorState(@StringRes errorMessage: Int) {
         loginMessage.visibility = View.VISIBLE
-        loginMessage.setTextColor(resources.getColor(R.color.errorText))
+        loginMessage.setTextColor(ContextCompat.getColor(requireContext(),R.color.errorText))
         loginMessage.text = getString(errorMessage)
     }
 
     private fun showLoginMessageLoadingState(@StringRes progressMessage: Int) {
         loginMessage.visibility = View.VISIBLE
-        loginMessage.setTextColor(resources.getColor(R.color.colorPrimaryText))
+        loginMessage.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorPrimaryText))
         loginMessage.text = getString(progressMessage)
     }
 
@@ -111,7 +110,7 @@ class LoginFragment : BaseFragment() {
 
     private fun showLoginButtonInitialState() {
         loginButton.revertAnimation()
-        loginButton.background = resources.getDrawable(R.drawable.button_shape_round)
+        loginButton.background = ContextCompat.getDrawable(requireContext(),R.drawable.button_shape_round)
     }
 
     private fun showPasswordErrorState(@StringRes errorMessage: Int) {

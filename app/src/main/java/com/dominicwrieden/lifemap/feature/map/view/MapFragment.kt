@@ -32,7 +32,7 @@ import com.esri.arcgisruntime.mapping.view.WrapAroundMode
 import com.esri.arcgisruntime.symbology.SimpleMarkerSymbol
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.fragment_map.*
-import org.koin.android.viewmodel.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.io.File
 import kotlin.random.Random
 
@@ -65,7 +65,6 @@ class MapFragment : BaseFragment() {
         //TODO id der Karte über den Intent holen (SafeArgs)
 
         //TODO über einen callback von der Karte Bescheid bekommen, dass die Items auf die Karte geprintet werden können
-
         viewModel.mapState.observeWith(this) { mapStates ->
             when (mapStates) {
                 is MapStates.Init -> showMap(
@@ -132,11 +131,13 @@ class MapFragment : BaseFragment() {
                             it.location.latitude,
                             SpatialReferences.getWgs84()
                         )
+
                         val marker = SimpleMarkerSymbol(
                             SimpleMarkerSymbol.Style.CIRCLE,
                             color,
                             15f
                         )
+
                         val graphic = Graphic(point, marker)
 
                         graphicsOverlay.graphics.add(graphic)
@@ -148,8 +149,6 @@ class MapFragment : BaseFragment() {
                 }
             }
         }
-
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -254,6 +253,7 @@ class MapFragment : BaseFragment() {
                         if (geoDatabase.geodatabaseFeatureTables.indexOf(it) == geoDatabase.geodatabaseFeatureTables.lastIndex) {
                             feature.addDoneLoadingListener {
                                 if (feature.loadStatus == LoadStatus.LOADED) {
+                                    //TODO what was the purpose of this?
                                     //point = feature.fullExtent.center
                                 }
                             }

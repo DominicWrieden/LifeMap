@@ -53,18 +53,19 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.core:core-ktx:$androidx_core_ktx_version"
 
-    //rx
-    implementation "io.reactivex.rxjava2:rxjava:$rxjava2_rxjava_version"
-    implementation "io.reactivex.rxjava2:rxandroid:$rxjava2_rxandroid_version"
-    implementation "io.reactivex.rxjava2:rxkotlin:$rxjava2_rxkotlin_version"
-    implementation "com.jakewharton.rxrelay2:rxrelay:$rxrelay2_rxrelay_version"
-    implementation "com.github.oussaki:RxDownloader:$rxdownloader_version"
+    //rx 3
+    implementation "io.reactivex.rxjava3:rxjava:$rxjava3_rxjava_version"
+    implementation "io.reactivex.rxjava3:rxandroid:$rxjava3_rxandroid_version"
+    implementation "io.reactivex.rxjava3:rxkotlin:$rxjava3_rxkotlin_version"
+    implementation "com.jakewharton.rxrelay3:rxrelay:$rxrelay3_rxrelay_version"
+
+
 
 
     //network
     implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit2_version"
+    implementation "com.github.akarnokd:rxjava3-retrofit-adapter:$retrofit2_adapter_rxjava3_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit2_version"
 
     //injection

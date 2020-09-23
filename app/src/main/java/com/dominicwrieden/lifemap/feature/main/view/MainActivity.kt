@@ -14,11 +14,11 @@ import com.dominicwrieden.lifemap.core.Destination.NavigationDirection
 import com.dominicwrieden.lifemap.feature.main.viewmodel.MainViewModel
 import com.dominicwrieden.lifemap.util.Event
 import com.dominicwrieden.lifemap.util.observeWith
-import com.jakewharton.rxbinding2.view.clicks
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
+import com.jakewharton.rxbinding4.view.clicks
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.addTo
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.viewmodel.ext.viewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 

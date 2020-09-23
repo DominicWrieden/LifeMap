@@ -1,7 +1,7 @@
 package com.dominicwrieden.api.implementation.old.authentication.source.retrofit
 
 import com.dominicwrieden.api.implementation.old.authentication.model.LoginResponse
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import retrofit2.Response
 import retrofit2.http.POST
 import retrofit2.http.Query

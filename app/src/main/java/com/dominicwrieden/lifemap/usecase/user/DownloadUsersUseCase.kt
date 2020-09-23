@@ -2,7 +2,7 @@ package com.dominicwrieden.lifemap.usecase.user
 
 import com.dominicwrieden.data.model.Task
 import com.dominicwrieden.data.repository.user.UserRepository
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 
 interface DownloadUsersUseCase {
     operator fun invoke(): Single<Task>

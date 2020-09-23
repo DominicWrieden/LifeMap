@@ -1,11 +1,11 @@
 package com.dominicwrieden.lifemap.util
 
 import androidx.lifecycle.*
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.addTo
 
 fun <T>Observable<T>.toLiveData() =
         LiveDataReactiveStreams.fromPublisher(toFlowable(BackpressureStrategy.LATEST))

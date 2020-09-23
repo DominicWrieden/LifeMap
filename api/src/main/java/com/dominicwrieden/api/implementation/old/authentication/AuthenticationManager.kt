@@ -2,8 +2,8 @@ package com.dominicwrieden.api.implementation.old.authentication
 
 import com.dominicwrieden.api.implementation.old.authentication.source.local.AuthenticationSharedPreferences
 import com.dominicwrieden.api.model.AuthenticationStatus
-import com.jakewharton.rxrelay2.BehaviorRelay
-import io.reactivex.Observable
+import com.jakewharton.rxrelay3.BehaviorRelay
+import io.reactivex.rxjava3.core.Observable
 
 internal class AuthenticationManager(private val authenticationSharedPreferences: AuthenticationSharedPreferences) {
 

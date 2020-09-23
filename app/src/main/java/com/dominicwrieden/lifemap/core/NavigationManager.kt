@@ -2,8 +2,8 @@ package com.dominicwrieden.lifemap.core
 
 import androidx.annotation.IdRes
 import androidx.navigation.NavDirections
-import com.jakewharton.rxrelay2.BehaviorRelay
-import io.reactivex.Observable
+import com.jakewharton.rxrelay3.BehaviorRelay
+import io.reactivex.rxjava3.core.Observable
 
 class NavigationManager {
 

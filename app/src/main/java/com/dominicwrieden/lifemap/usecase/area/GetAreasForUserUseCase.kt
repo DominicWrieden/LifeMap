@@ -4,7 +4,7 @@ import com.dominicwrieden.api.model.Area
 import com.dominicwrieden.data.model.Error
 import com.dominicwrieden.data.model.Result
 import com.dominicwrieden.lifemap.usecase.authentication.GetLoggedInUserUseCase
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 
 interface GetAreasForUserUseCase {
     operator fun invoke(): Single<Result<List<Area>>>
@@ -14,7 +14,7 @@ class GetAreasForUserUseCaseImpl(
     private val getAreaUseCase: GetAreaUseCase,
     private val getLoggedInUserUseCase: GetLoggedInUserUseCase
 ) : GetAreasForUserUseCase {
-    override fun invoke() = getLoggedInUserUseCase.invoke()
+    override fun invoke(): Single<Result<List<Area>>> = getLoggedInUserUseCase.invoke()
         .flatMap { userResult ->
             when (userResult) {
                 is Result.Success -> Single.merge(userResult.value.permittedAreaIds.map {
@@ -25,7 +25,7 @@ class GetAreasForUserUseCaseImpl(
                     .toList()
                     .map { areaResults ->
                         if (areaResults.all { it is Result.Success }) {
-                            return@map Result.Success(areaResults.map { (it as Result.Success).value }) as Result<List<Area>>
+                            return@map Result.Success(areaResults.map { (it as Result.Success).value })
                         } else {
                             val error =
                                 (areaResults.firstOrNull { it is Result.Failure } as Result.Failure).error

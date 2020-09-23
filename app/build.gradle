@@ -79,12 +79,12 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$glide_version"
     implementation "br.com.simplepass:loading-button-android:$simplepass_loading_button_version"
 
-    //rx
-    implementation "io.reactivex.rxjava2:rxjava:$rxjava2_rxjava_version"
-    implementation "io.reactivex.rxjava2:rxandroid:$rxjava2_rxandroid_version"
-    implementation "io.reactivex.rxjava2:rxkotlin:$rxjava2_rxkotlin_version"
-    implementation "com.jakewharton.rxrelay2:rxrelay:$rxrelay2_rxrelay_version"
-    implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxbinding2_version"
+    //rx 3
+    implementation "io.reactivex.rxjava3:rxjava:$rxjava3_rxjava_version"
+    implementation "io.reactivex.rxjava3:rxandroid:$rxjava3_rxandroid_version"
+    implementation "io.reactivex.rxjava3:rxkotlin:$rxjava3_rxkotlin_version"
+    implementation "com.jakewharton.rxrelay3:rxrelay:$rxrelay3_rxrelay_version"
+    implementation "com.jakewharton.rxbinding4:rxbinding:$rxbinding4_version"
 
     //injection
     implementation "org.koin:koin-android:$koin_version"
