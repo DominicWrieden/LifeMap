@@ -56,8 +56,9 @@ class MainActivity : AppCompatActivity() {
 
 
         viewModel.startDestination.observeWith(this) { startDestinationEvent ->
-            navGraph.startDestination =
+            navGraph.setStartDestination(
                 startDestinationEvent.getContentIfNotHandled() ?: R.id.loginFragment
+            )
             navController.graph = navGraph
 
             viewModel.destination.observeWith(this) { destinationEvent: Event<Destination> ->

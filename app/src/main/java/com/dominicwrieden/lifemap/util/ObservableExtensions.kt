@@ -49,4 +49,4 @@ fun <T> Single<T>.toUnsubscribedEventLiveData(disposable: CompositeDisposable): 
 }
 
 fun <T> LiveData<T>.observeWith(owner: LifecycleOwner, observer: (T)->Unit) =
-        observe(owner, Observer { observer(it!!) })
+        observe(owner, Observer { observer(it) })

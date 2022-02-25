@@ -4,13 +4,10 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -38,7 +35,7 @@ android {
     productFlavors {
         oldAPI {
             dimension "server"
-            buildConfigField 'String', 'API_BASE_URL', properties.getProperty('oldApiBaseUrl')
+            buildConfigField 'String', 'API_BASE_URL', properties.getProperty('API_BASE_URL_OLD')
         }
 
         newAPI {
@@ -53,13 +50,12 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.core:core-ktx:$androidx_core_ktx_version"
 
+
     //rx 3
     implementation "io.reactivex.rxjava3:rxjava:$rxjava3_rxjava_version"
     implementation "io.reactivex.rxjava3:rxandroid:$rxjava3_rxandroid_version"
     implementation "io.reactivex.rxjava3:rxkotlin:$rxjava3_rxkotlin_version"
     implementation "com.jakewharton.rxrelay3:rxrelay:$rxrelay3_rxrelay_version"
-
-
 
 
     //network
@@ -68,16 +64,19 @@ dependencies {
     implementation "com.github.akarnokd:rxjava3-retrofit-adapter:$retrofit2_adapter_rxjava3_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit2_version"
 
+
     //injection
     implementation "org.koin:koin-android:$koin_version"
     testImplementation "org.koin:koin-test:$koin_version"
     androidTestImplementation "org.koin:koin-test:$koin_version"
+
 
     //misc util
     implementation "com.jakewharton.threetenabp:threetenabp:$three_ten_version"
     implementation "androidx.security:security-crypto:$androidx_security_crypto_version"
 
 
+    //test
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
 }

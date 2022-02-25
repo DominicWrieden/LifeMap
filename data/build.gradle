@@ -6,13 +6,10 @@ apply plugin: 'com.squareup.sqldelight'
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -52,7 +49,6 @@ android {
 dependencies {
     api project(':api')
 
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.core:core-ktx:$androidx_core_ktx_version"
@@ -61,19 +57,23 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:$rxjava3_rxjava_version"
     implementation "io.reactivex.rxjava3:rxkotlin:$rxjava3_rxkotlin_version"
 
+
     // sqldelight
     implementation "com.squareup.sqldelight:android-driver:$sqldelight_version"
     testImplementation "com.squareup.sqldelight:sqlite-driver:$sqldelight_version"
     implementation "com.squareup.sqldelight:rxjava3-extensions:$sqldelight_version"
+
 
     //injection
     implementation "org.koin:koin-android:$koin_version"
     testImplementation "org.koin:koin-test:$koin_version"
     androidTestImplementation "org.koin:koin-test:$koin_version"
 
+
     //misc util
     implementation "com.jakewharton.threetenabp:threetenabp:$three_ten_version"
 
+    //test
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
 }

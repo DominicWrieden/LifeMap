@@ -135,7 +135,7 @@ class ItemRepositoryImpl(private val database: LifeMapDatabaseQueries, private v
                     localIdProperty = property.localId,
                     localIdItemEntry = property.itemEntryId!!,
                     propertyConfigId = property.propertyConfigId,
-                    value = property.value.toString() // TODO Adapter schreiben, um Daten richtig in einen String umzuwandeln
+                    value_ = property.value.toString() // TODO Adapter schreiben, um Daten richtig in einen String umzuwandeln
                 )
             }
         }

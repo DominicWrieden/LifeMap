@@ -5,7 +5,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- For arcgis map -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-feature android:glEsVersion="0x00020000" android:required="true" />
+
 
     <application
         android:name=".App"
@@ -17,9 +19,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
+        <!--TODO löschen wenn arcig gelöscht wird-->
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
         <activity
             android:name=".feature.main.view.MainActivity"
             android:theme="@style/AppTheme.Splash"
+            android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

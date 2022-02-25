@@ -2,10 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "com.dominicwrieden.lifemap"
@@ -15,6 +15,9 @@ android {
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
+        }
     }
 
     buildTypes {
@@ -32,8 +35,21 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding = true
+    }
+
+    //TODO löschen wenn arc gis gelöscht wird
+    packagingOptions {
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+
+    Properties properties = new Properties()
+    def propertiesFile = project.rootProject.file('local.properties')
+    if (propertiesFile.exists()) {
+        properties.load(propertiesFile.newDataInputStream())
     }
 
     flavorDimensions "server"
@@ -41,10 +57,12 @@ android {
     productFlavors {
         oldAPI {
             dimension "server"
+            buildConfigField 'String', 'ARCGIS_API_KEY', properties.getProperty('ARCGIS_API_KEY')
         }
 
         newAPI {
             dimension "server"
+            buildConfigField 'String', 'ARCGIS_API_KEY', properties.getProperty('ARCGIS_API_KEY')
         }
     }
 
@@ -61,14 +79,17 @@ dependencies {
     implementation "com.android.support:multidex:$multidex_version"
     implementation "com.google.android.gms:play-services-auth:$google_play_services_version"
 
+
     //architecture components
     implementation "androidx.lifecycle:lifecycle-extensions:$androidx_lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-reactivestreams:$androidx_lifecycle_version"
     implementation "com.google.android.material:material:$google_material_version"
 
+
     //navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+
 
     //ui
     implementation "androidx.constraintlayout:constraintlayout:${constraintlayout_version}"
@@ -86,15 +107,19 @@ dependencies {
     implementation "com.jakewharton.rxrelay3:rxrelay:$rxrelay3_rxrelay_version"
     implementation "com.jakewharton.rxbinding4:rxbinding:$rxbinding4_version"
 
+
     //injection
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-android-viewmodel:$koin_version"
     testImplementation "org.koin:koin-test:$koin_version"
     androidTestImplementation "org.koin:koin-test:$koin_version"
 
+
     //misc util
     implementation "com.jakewharton.threetenabp:threetenabp:$three_ten_version"
-    implementation "com.esri.arcgisruntime:arcgis-android:$esri_arcgis_version"
+    //TODO 2022.02.25: ArcGis needs to be fixed. Best case: Import old API like this https://developers.arcgis.com/android/get-started/
+    // implementation 'com.esri.arcgis.android:arcgis-android:10.2.8-1'
+
 
     //test
     testImplementation "junit:junit:$junit_version"

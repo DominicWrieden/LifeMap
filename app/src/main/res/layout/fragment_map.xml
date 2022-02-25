@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="viewmodel"
             type="com.dominicwrieden.lifemap.feature.map.viewmodel.MapViewModel" />
@@ -12,15 +12,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.esri.arcgisruntime.mapping.view.MapView
+        <!-- TODO 2022.02.25: ArcGis needs to be fixed.
+        <com.esri.android.map.MapView
             android:id="@+id/map"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            mapoptions.MapType="Streets"
+            mapoptions.center="34.056215, -117.195668"
+            mapoptions.ZoomLevel="16"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,28 +1,28 @@
 ext {
 
     minSdkVersion = 23
-    targetSdkVersion = 29
-    androidGradlePluginVersion = '3.6.3'
-    buildToolsVersion = '29.0.0'
+    targetSdkVersion = 31
+    androidGradlePluginVersion = '4.1.2'
+    buildToolsVersion = '29.0.3'
 
-    kotlin_version = '1.4.10'
+    kotlin_version = '1.5.30'
     koin_version = '2.1.6'
 
     androidx_appcompat_version = '1.2.0'
-    androidx_core_ktx_version = '1.3.1'
+    androidx_core_ktx_version = '1.3.2'
     google_material_version = '1.2.1'
     multidex_version = '1.0.3'
-    google_play_services_version = '18.1.0'
+    google_play_services_version = '19.0.0'
 
     //architecture components
     androidx_lifecycle_version = '2.2.0'
-    navigation_version = '2.3.0'
+    navigation_version = '2.4.1'
 
     //sqldelight
-    sqldelight_version = '1.4.3'
+    sqldelight_version = '1.4.4'
 
     //ui
-    constraintlayout_version = '2.0.1'
+    constraintlayout_version = '2.0.4'
     groupie_version = '2.8.1'
     glide_version = '4.11.0'
     simplepass_loading_button_version = '2.2.0'
@@ -42,15 +42,14 @@ ext {
     moshi_version = '1.7.0'
 
     //misc util
-    three_ten_version = '1.2.4'
+    three_ten_version = '1.3.0'
     androidx_security_crypto_version = '1.0.0-rc02'
-    esri_arcgis_version = '100.7.0' // versions 100.8.0 and higher have some performance issues
 
     //test
-    junit_version = '4.13'
+    junit_version = '4.13.1'
     junit_ext_version = '1.1.2'
     espresso_version = '3.3.0'
     mockito_kotlin_version = '2.2.0'
     androidx_arch_core_testing_version = '2.1.0'
-    google_truth_version = '1.0.1'
+    google_truth_version = '1.1'
 }

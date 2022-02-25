@@ -1,6 +1,5 @@
 package com.dominicwrieden.lifemap.feature.login.viewmodel
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dominicwrieden.data.model.Error
@@ -14,6 +13,7 @@ import com.dominicwrieden.lifemap.feature.login.model.LoginMessageState
 import com.dominicwrieden.lifemap.feature.login.model.LoginTextInputState
 import com.dominicwrieden.lifemap.usecase.area.DownloadAreasUseCase
 import com.dominicwrieden.lifemap.usecase.area.DownloadGeoDbForAreaUseCase
+import com.dominicwrieden.lifemap.usecase.area.SetDefaultAreaUseCase
 import com.dominicwrieden.lifemap.usecase.authentication.LoginUseCase
 import com.dominicwrieden.lifemap.usecase.item.DownloadItemsUseCase
 import com.dominicwrieden.lifemap.usecase.itemtype.DownloadItemTypesUseCase
@@ -34,7 +34,8 @@ class LoginViewModel(
     private val downloadItemTypesUseCase: DownloadItemTypesUseCase,
     private val downloadPropertyConfigsUseCase: DownloadPropertyConfigsUseCase,
     private val downloadItemsUseCase: DownloadItemsUseCase,
-    private val downloadGeoDbForAreaUseCase: DownloadGeoDbForAreaUseCase
+    private val downloadGeoDbForAreaUseCase: DownloadGeoDbForAreaUseCase,
+    private val setDefaultAreaUseCase: SetDefaultAreaUseCase
 
 ) : BaseViewModel() {
 
@@ -56,7 +57,6 @@ class LoginViewModel(
     val messageState: LiveData<LoginMessageState> = messageStateRelay.toLiveData()
 
 
-    @SuppressLint("CheckResult")
     fun onLoginClicked() {
 
         if (evaluateInput()) {
@@ -129,7 +129,8 @@ class LoginViewModel(
                 downloadPropertyConfigsUseCase.invoke(),
                 downloadItemTypesUseCase.invoke(),
                 downloadItemsUseCase.invoke(),
-                downloadGeoDbForAreaUseCase.invoke()
+                downloadGeoDbForAreaUseCase.invoke(),
+                setDefaultAreaUseCase.invoke()
             )
         )
             .doOnSubscribe {
@@ -145,7 +146,7 @@ class LoginViewModel(
                     }
                 }
             }, {
-                loginFailed(Error.UNKNOWN) //TODO wirklich unkown?
+                loginFailed(Error.UNKNOWN) //TODO wirklich unknown?
             }).addTo(disposable)
     }
 
@@ -156,7 +157,6 @@ class LoginViewModel(
     private fun loginFailed(error: Error) {
         //TODO clear database
         //TODO clear login credentials
-
 
         userNameInputStateRelay.accept(LoginTextInputState.Initial)
         passwordInputStateRelay.accept(LoginTextInputState.Initial)

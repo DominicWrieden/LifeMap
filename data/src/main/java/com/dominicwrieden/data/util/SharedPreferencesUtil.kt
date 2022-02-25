@@ -4,19 +4,20 @@ import android.content.Context
 import android.content.SharedPreferences
 
 
-class SharedPreferencesUtil(
-    private val context: Context
-) {
+class SharedPreferencesUtil(context: Context) {
 
     companion object {
-        const val SHARED_PREFERENCES_LIFE_MAP = "SHARED_PREFERENCES_LIFE_MAP"
+        const val SHARED_PREFERENCES_LIFE_MAP_DATA = "SHARED_PREFERENCES_LIFE_MAP_DATA"
     }
 
     private val sharedPreferences: SharedPreferences =
-        context.applicationContext.getSharedPreferences(SHARED_PREFERENCES_LIFE_MAP,
-            Context.MODE_PRIVATE)
+        context.applicationContext.getSharedPreferences(
+            SHARED_PREFERENCES_LIFE_MAP_DATA,
+            Context.MODE_PRIVATE
+        )
 
-    fun retrieveFromSharedPreferences(key: String): String = sharedPreferences.getString(key, "")?:""
+    fun retrieveFromSharedPreferences(key: String): String =
+        sharedPreferences.getString(key, "") ?: ""
 
     fun saveToSharedPreferences(key: String, value: String): Unit {
         sharedPreferences

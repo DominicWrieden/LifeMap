@@ -20,4 +20,6 @@ interface AreaRepository {
     fun getAreas(): Single<Result<List<Area>>>
 
     fun getGeoDbForArea(areaId: String): Single<Result<File>>
+    fun setSelectedArea(areaId: String)
+    fun getSelectedArea(): String
 }

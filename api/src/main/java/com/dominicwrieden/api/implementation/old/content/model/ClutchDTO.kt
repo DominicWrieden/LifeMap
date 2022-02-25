@@ -49,7 +49,7 @@ internal fun convertClutchHistoryToItem(
     clutchHistories: List<ClutchDTO>,
     users: List<User>
 ): Item? {
-    val firstItem = clutchHistories.minBy { it.reportDate.toEpochSecond() }
+    val firstItem = clutchHistories.minByOrNull { it.reportDate.toEpochSecond() }
 
     return firstItem?.let {
         Item(

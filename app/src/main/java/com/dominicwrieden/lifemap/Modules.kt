@@ -41,9 +41,36 @@ val appModule = module {
     single<DownloadGeoDbForAreaUseCase> { DownloadGeoDbForAreaUseCaseImpl(get(), get()) }
     single<GetGeoDbForAreaUseCase> { GetGeoDbForAreaUseCaseImpl(get()) }
     single<GetItemsForAreaUseCase> { GetItemsForAreaUseCaseImpl(get()) }
+    single<GetSelectedAreaUseCase> { GetSelectedAreaUseCaseImpl(get()) }
+    single<SetSelectedAreaUseCase> { SetSelectedAreaUseCaseImpl(get()) }
+    single<SetDefaultAreaUseCase> { SetDefaultAreaUseCaseImpl(get(), get(), get()) }
 
 
-    viewModel { LoginViewModel(get(), get(), get(), get(), get(), get(), get(), get(),get()) }
-    viewModel { MapViewModel(get(), get()) }
-    viewModel { MainViewModel(get(),get()) }
+    viewModel {
+        LoginViewModel(
+            navigationManager = get(),
+            loginUseCase = get(),
+            downloadAreasUseCase = get(),
+            downloadStatesUseCase = get(),
+            downloadUsersUseCase = get(),
+            downloadItemTypesUseCase = get(),
+            downloadPropertyConfigsUseCase = get(),
+            downloadItemsUseCase = get(),
+            downloadGeoDbForAreaUseCase = get(),
+            setDefaultAreaUseCase = get()
+        )
+    }
+    viewModel {
+        MapViewModel(
+            getSelectedAreaUseCase = get(),
+            getGeoDbForAreaUseCase = get(),
+            getItemsForAreaUseCase = get()
+        )
+    }
+    viewModel {
+        MainViewModel(
+            authenticationRepository = get(),
+            navigationManager = get()
+        )
+    }
 }

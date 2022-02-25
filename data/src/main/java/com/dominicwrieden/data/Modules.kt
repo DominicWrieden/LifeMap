@@ -85,6 +85,7 @@ val dataModule = module {
         AreaRepositoryImpl(
             get(),
             get(),
+            get(),
             get()
         )
     }
