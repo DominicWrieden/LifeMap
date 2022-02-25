@@ -5,27 +5,28 @@ ext {
     androidGradlePluginVersion = '4.1.2'
     buildToolsVersion = '29.0.3'
 
-    kotlin_version = '1.5.30'
+    kotlin_version = '1.6.0'
     koin_version = '2.1.6'
 
-    androidx_appcompat_version = '1.2.0'
-    androidx_core_ktx_version = '1.3.2'
-    google_material_version = '1.2.1'
+    androidx_appcompat_version = '1.4.1'
+    androidx_core_ktx_version = '1.7.0'
+    google_material_version = '1.5.0'
     multidex_version = '1.0.3'
-    google_play_services_version = '19.0.0'
+    google_play_services_version = '20.1.0'
 
     //architecture components
-    androidx_lifecycle_version = '2.2.0'
+    androidx_lifecycle_version = '2.4.1'
     navigation_version = '2.4.1'
 
     //sqldelight
     sqldelight_version = '1.4.4'
 
     //ui
-    constraintlayout_version = '2.0.4'
-    groupie_version = '2.8.1'
+    constraintlayout_version = '2.1.3'
+    groupie_version = '2.9.0'
     glide_version = '4.11.0'
     simplepass_loading_button_version = '2.2.0'
+    compose_version = '1.1.0'
 
     //rx3
     rxjava3_rxjava_version = '3.0.6'
@@ -46,9 +47,9 @@ ext {
     androidx_security_crypto_version = '1.0.0-rc02'
 
     //test
-    junit_version = '4.13.1'
-    junit_ext_version = '1.1.2'
-    espresso_version = '3.3.0'
+    junit_version = '4.13.2'
+    junit_ext_version = '1.1.3'
+    espresso_version = '3.4.0'
     mockito_kotlin_version = '2.2.0'
     androidx_arch_core_testing_version = '2.1.0'
     google_truth_version = '1.1'
