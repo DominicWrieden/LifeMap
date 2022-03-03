@@ -11,14 +11,14 @@ import com.dominicwrieden.lifemap.R
 import com.dominicwrieden.lifemap.core.Destination
 import com.dominicwrieden.lifemap.core.Destination.Action
 import com.dominicwrieden.lifemap.core.Destination.NavigationDirection
+import com.dominicwrieden.lifemap.databinding.ActivityMainBinding
 import com.dominicwrieden.lifemap.feature.main.viewmodel.MainViewModel
 import com.dominicwrieden.lifemap.util.Event
 import com.dominicwrieden.lifemap.util.observeWith
 import com.jakewharton.rxbinding4.view.clicks
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
-import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,11 +28,13 @@ class MainActivity : AppCompatActivity() {
 
     private val disposable = CompositeDisposable()
 
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.AppTheme)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setUpNavigation()
 
@@ -42,22 +44,22 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("ResourceType")
     private fun setUpNavigationDrawer() {
         //set up navigation drawer icon
-        drawerIcon.clicks().subscribe {
-            drawer_layout.openDrawer(Gravity.START)
+        binding.drawerIcon.clicks().subscribe {
+            binding.layoutDrawer.openDrawer(Gravity.START)
         }.addTo(disposable)
 
 
     }
 
     private fun setUpNavigation() {
-        val navHostFragment = nav_host_fragment as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val graphInflater = navHostFragment.navController.navInflater
         val navGraph = graphInflater.inflate(R.navigation.nav_graph)
 
 
         viewModel.startDestination.observeWith(this) { startDestinationEvent ->
             navGraph.setStartDestination(
-                startDestinationEvent.getContentIfNotHandled() ?: R.id.loginFragment
+                startDestinationEvent.getContentIfNotHandled() ?: R.id.loginComposeFragment
             )
             navController.graph = navGraph
 
@@ -73,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            drawerIcon.isVisible = destination.id != R.id.loginFragment
+            binding.drawerIcon.isVisible = destination.id != R.id.loginFragment
         }
     }
 

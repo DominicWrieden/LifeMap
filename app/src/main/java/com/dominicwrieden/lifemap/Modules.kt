@@ -21,7 +21,7 @@ import com.dominicwrieden.lifemap.usecase.state.DownloadStatesUseCase
 import com.dominicwrieden.lifemap.usecase.state.DownloadStatesUseCaseImpl
 import com.dominicwrieden.lifemap.usecase.user.DownloadUsersUseCase
 import com.dominicwrieden.lifemap.usecase.user.DownloadUsersUseCaseImpl
-import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {

@@ -1,6 +1,5 @@
 package com.dominicwrieden.lifemap.feature.main.viewmodel
 
-import androidx.annotation.NavigationRes
 import androidx.lifecycle.LiveData
 import com.dominicwrieden.api.model.AuthenticationStatus
 import com.dominicwrieden.data.repository.authentication.AuthenticationRepository
@@ -21,7 +20,7 @@ class MainViewModel(
         .map { authenticationStatus ->
             when (authenticationStatus) {
                 is AuthenticationStatus.LoggedIn -> R.id.mapFragment
-                else -> R.id.loginFragment
+                else -> R.id.loginComposeFragment
             }
         }.onErrorReturn {
             //TODO do logout

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment"
+    app:startDestination="@id/loginComposeFragment"
     tools:ignore="UnusedNavigation">
 
 
@@ -18,6 +18,19 @@
         android:name="com.dominicwrieden.lifemap.feature.login.view.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login">
+
+        <action
+            android:id="@+id/loginToMapNavigation"
+            app:destination="@id/mapFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginComposeFragment"
+        android:name="com.dominicwrieden.lifemap.feature.login.view.LoginComposeFragment"
+        android:label="LoginComposeFragment">
 
         <action
             android:id="@+id/loginToMapNavigation"

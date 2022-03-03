@@ -172,6 +172,16 @@ class LoginViewModel(
         )
     }
 
+    fun userNameChanged(userName: String){
+        this.userName.postValue(userName)
+        userNameInputStateRelay.accept(LoginTextInputState.Initial)
+    }
+
+    fun passwordChanged(password:String){
+        this.password.postValue(password)
+        passwordInputStateRelay.accept(LoginTextInputState.Initial)
+    }
+
 
     fun userNameChanged() {
         userNameInputStateRelay.accept(LoginTextInputState.Initial)

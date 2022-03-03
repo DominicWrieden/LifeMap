@@ -9,7 +9,7 @@ import com.dominicwrieden.lifemap.R
 import com.dominicwrieden.lifemap.core.BaseFragment
 import com.dominicwrieden.lifemap.databinding.FragmentMapBinding
 import com.dominicwrieden.lifemap.feature.map.viewmodel.MapViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MapFragment : BaseFragment() {

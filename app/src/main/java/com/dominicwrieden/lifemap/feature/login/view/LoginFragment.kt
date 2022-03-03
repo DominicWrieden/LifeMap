@@ -17,21 +17,22 @@ import com.dominicwrieden.lifemap.feature.login.viewmodel.LoginViewModel
 import com.dominicwrieden.lifemap.util.observeWith
 import com.jakewharton.rxbinding4.widget.textChanges
 import io.reactivex.rxjava3.kotlin.addTo
-import kotlinx.android.synthetic.main.fragment_login.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : BaseFragment() {
 
     private val viewModel: LoginViewModel by viewModel()
 
+    private lateinit var binding:FragmentLoginBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
 
-        val binding: FragmentLoginBinding =
+        binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
 
         binding.lifecycleOwner = this
@@ -76,71 +77,71 @@ class LoginFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //observe if user changed something in the user name input field
-        userName.textChanges()
+        binding.userName.textChanges()
             .skipInitialValue()
             .subscribe { viewModel.userNameChanged() }
             .addTo(disposable)
 
         //observe if user changed something in the password input field
-        password.textChanges()
+        binding.password.textChanges()
             .skipInitialValue()
             .subscribe { viewModel.passwordChanged() }
             .addTo(disposable)
     }
 
     private fun showLoginMessageErrorState(@StringRes errorMessage: Int) {
-        loginMessage.visibility = View.VISIBLE
-        loginMessage.setTextColor(ContextCompat.getColor(requireContext(),R.color.errorText))
-        loginMessage.text = getString(errorMessage)
+        binding.loginMessage.visibility = View.VISIBLE
+        binding.loginMessage.setTextColor(ContextCompat.getColor(requireContext(),R.color.design_default_color_error))
+        binding.loginMessage.text = getString(errorMessage)
     }
 
     private fun showLoginMessageLoadingState(@StringRes progressMessage: Int) {
-        loginMessage.visibility = View.VISIBLE
-        loginMessage.setTextColor(ContextCompat.getColor(requireContext(),R.color.colorPrimaryText))
-        loginMessage.text = getString(progressMessage)
+        binding.loginMessage.visibility = View.VISIBLE
+        binding.loginMessage.setTextColor(ContextCompat.getColor(requireContext(),R.color.design_default_color_on_primary))
+        binding.loginMessage.text = getString(progressMessage)
     }
 
     private fun showLoginMessageInitialState() {
-        loginMessage.visibility = View.INVISIBLE
+        binding.loginMessage.visibility = View.INVISIBLE
     }
 
     private fun showLoginButtonLoadingState() {
-        loginButton.startAnimation()
+        binding.loginButton.startAnimation()
     }
 
     private fun showLoginButtonInitialState() {
-        loginButton.revertAnimation()
-        loginButton.background = ContextCompat.getDrawable(requireContext(),R.drawable.button_shape_round)
+        binding.loginButton.revertAnimation()
+        binding.loginButton.background = ContextCompat.getDrawable(requireContext(),R.drawable.button_shape_round)
     }
 
     private fun showPasswordErrorState(@StringRes errorMessage: Int) {
-        password.isEnabled = true
-        passwordLayout.error = getString(errorMessage)
+        binding.password.isEnabled = true
+        binding.passwordLayout.error = getString(errorMessage)
     }
 
 
     private fun showPasswordLoadingState() {
-        password.isEnabled = false
-        passwordLayout.error = null
+        binding.password.isEnabled = false
+        binding.passwordLayout.error = null
     }
 
     private fun showPasswordInitialState() {
-        password.isEnabled = true
-        passwordLayout.error = null
+        binding.password.isEnabled = true
+        binding.passwordLayout.error = null
     }
 
     private fun showUserNameErrorState(@StringRes errorMessage: Int) {
-        userName.isEnabled = true
-        userNameLayout.error = getString(errorMessage)
+        binding.userName.isEnabled = true
+        binding.userNameLayout.error = getString(errorMessage)
     }
 
     private fun showUserNameLoadingState() {
-        userName.isEnabled = false
-        userNameLayout.error = null
+        binding.userName.isEnabled = false
+        binding.userNameLayout.error = null
     }
 
     private fun showUserNameInitialState() {
-        userName.isEnabled = true
-        userNameLayout.error = null
+        binding.userName.isEnabled = true
+        binding.userNameLayout.error = null
     }
 }

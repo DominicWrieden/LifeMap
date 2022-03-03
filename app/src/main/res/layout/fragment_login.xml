@@ -82,7 +82,7 @@
             android:background="@drawable/button_shape_round"
             app:finalCornerAngle="50dp"
             app:initialCornerAngle="0dp"
-            app:spinning_bar_color="@color/colorSecondary"
+            app:spinning_bar_color="@color/indigo_dark"
             app:spinning_bar_padding="8dp"
             android:textAllCaps="true"
             android:text="@string/login_fragment_login_button"

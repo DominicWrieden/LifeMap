@@ -23,7 +23,7 @@
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
 
         <activity
-            android:name=".feature.main.view.MainActivity"
+            android:name=".feature.main.view.MainComposeActivity"
             android:theme="@style/AppTheme.Splash"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
