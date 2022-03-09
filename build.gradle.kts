@@ -1,17 +1,18 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    apply from: "versions.gradle"
+
+    apply(from="versions.gradle")
 
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:$androidGradlePluginVersion"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "com.squareup.sqldelight:gradle-plugin:$sqldelight_version"
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigation_version"
+        classpath("com.android.tools.build:gradle:4.1.2")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
+        classpath("com.squareup.sqldelight:gradle-plugin:1.5.3")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.4.1")
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -26,7 +27,7 @@ allprojects {
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
 }
 
