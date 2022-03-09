@@ -1,6 +1,6 @@
 package com.dominicwrieden.lifemap.usecase.area
 
-import com.dominicwrieden.api.model.Area
+import com.dominicwrieden.Area
 import com.dominicwrieden.data.model.Error
 import com.dominicwrieden.data.model.Result
 import com.dominicwrieden.lifemap.usecase.authentication.GetLoggedInUserUseCase

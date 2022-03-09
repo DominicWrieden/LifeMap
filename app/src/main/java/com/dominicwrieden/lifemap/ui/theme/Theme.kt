@@ -14,13 +14,16 @@ private val LightThemeColors = lightColors(
     secondary = YellowIntermediate,
     secondaryVariant = YellowLight,
     onSecondary = Color.Black,
-    onBackground = Color.Gray
+    onBackground = Color.Gray,
+    background = GrayLight,
+    surface = GrayIntermediate,
+    onSurface = Color.Black
 )
 
 @Composable
 fun LifeMapTheme(
     content: @Composable () -> Unit
-){
+) {
     MaterialTheme(
         colors = LightThemeColors,
         typography = typography,

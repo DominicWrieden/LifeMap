@@ -1,6 +1,6 @@
 package com.dominicwrieden.data.repository.area
 
-import com.dominicwrieden.api.model.Area
+import com.dominicwrieden.Area
 import com.dominicwrieden.data.model.Result
 import com.dominicwrieden.data.model.Task
 import io.reactivex.rxjava3.core.Single
@@ -17,7 +17,7 @@ interface AreaRepository {
 
     fun getArea(areaId: String): Single<Result<Area>>
 
-    fun getAreas(): Single<Result<List<Area>>>
+    fun getAreas(): Single<Result<List<com.dominicwrieden.api.model.Area>>>
 
     fun getGeoDbForArea(areaId: String): Single<Result<File>>
     fun setSelectedArea(areaId: String)

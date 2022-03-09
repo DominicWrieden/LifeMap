@@ -2,6 +2,7 @@ package com.dominicwrieden.lifemap
 
 import com.dominicwrieden.lifemap.core.NavigationManager
 import com.dominicwrieden.lifemap.feature.login.viewmodel.LoginViewModel
+import com.dominicwrieden.lifemap.feature.main.viewmodel.DrawerViewModel
 import com.dominicwrieden.lifemap.feature.main.viewmodel.MainViewModel
 import com.dominicwrieden.lifemap.feature.map.viewmodel.MapViewModel
 import com.dominicwrieden.lifemap.usecase.area.*
@@ -45,7 +46,7 @@ val appModule = module {
     single<SetSelectedAreaUseCase> { SetSelectedAreaUseCaseImpl(get()) }
     single<SetDefaultAreaUseCase> { SetDefaultAreaUseCaseImpl(get(), get(), get()) }
 
-
+//TODO 2022-03-08: Stupid me, inject in viewmodels
     viewModel {
         LoginViewModel(
             navigationManager = get(),
@@ -71,6 +72,12 @@ val appModule = module {
         MainViewModel(
             authenticationRepository = get(),
             navigationManager = get()
+        )
+    }
+
+    viewModel{
+        DrawerViewModel(
+            getAreasForUserUseCase = get()
         )
     }
 }

@@ -49,7 +49,7 @@ CREATE TABLE item (
     localIdItem INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT,
     remoteIdItem TEXT,
     remoteIdArea TEXT,
-    createDate INTEGER As OffsetDateTime NOT NULL,
+    createDate INTEGER AS OffsetDateTime NOT NULL,
     idReporter TEXT NOT NULL,
     FOREIGN KEY(remoteIdArea) REFERENCES area(remoteIdArea),
     FOREIGN KEY(idReporter) REFERENCES user(remoteIdUser)

@@ -10,6 +10,10 @@ val YellowIntermediate = Color(0xFFffee58)
 val YellowLight = Color(0xFFffff8b)
 val YellowDark = Color(0xFFc9bc1f)
 
+val GrayLight = Color(0xFFF8F8F8)
+val GrayIntermediate = Color(0xFFE8E8E8)
+
+
 /*
 <!--?xml version="1.0" encoding="UTF-8"?-->
 <resources>

@@ -21,7 +21,7 @@ class DownloadGeoDbForAreaUseCaseImpl(
                 is Result.Success -> {
                     Single.concat(areasResult.value
                         .map {
-                            areaRepository.downloadGeoDBForArea(it.remoteId,it.geoDbFileName)
+                            areaRepository.downloadGeoDBForArea(it.remoteIdArea,it.geoDbFileName)
                         })
                         .toList()
                         .map { downloadedAreaGeoDBs ->

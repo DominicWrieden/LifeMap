@@ -23,7 +23,7 @@ class SetDefaultAreaUseCaseImpl(
                     if (resultAreasForUser.value.isEmpty()) {
                         return@flatMap Single.just(Task.Failure(Error.DATABASE_ERROR))
                     } else {
-                        val permittedAreaIds = resultAreasForUser.value.map { it.remoteId }
+                        val permittedAreaIds = resultAreasForUser.value.map { it.remoteIdArea }
 
                         Single.merge(permittedAreaIds.map { areaId ->
                             getItemsForAreaUseCase.invoke(areaId).map { itemResult ->

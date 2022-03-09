@@ -42,19 +42,9 @@ class AreaRepositoryImpl(
 
             }.toTask()
 
-    override fun getArea(areaId: String): Single<Result<Area>> =
+    override fun getArea(areaId: String): Single<Result<com.dominicwrieden.Area>> =
         database.getArea(areaId)
-            .queryToSingleResultMapToOne { areaDTO ->
-                Area(
-                    remoteId = areaDTO.remoteIdArea,
-                    name = areaDTO.name,
-                    geoDbId = areaDTO.geoDbID,
-                    geoDbName = areaDTO.geoDbName,
-                    geoDbFileName = areaDTO.geoDbFileName,
-                    geoDbFilePath = areaDTO.geoDbFilePath,
-                    geoDbCreateDate = areaDTO.geoDbCreateDate
-                )
-            }
+            .queryToSingleResultMapToOne{it}
 
 
     override fun getAreas() = api.getAreas().toResult()

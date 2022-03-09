@@ -56,7 +56,8 @@
             app:layout_constraintTop_toTopOf="@id/updateAreaButton"
             tools:text="Aktualisiert: 20.04.2020" />
 
-        <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+        <!-- Original br.com.simplepass.loadingbutton.customViews.CircularProgressButton -->
+        <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/updateAreaButton"
             android:layout_width="wrap_content"
             android:layout_height="34dp"

@@ -19,20 +19,19 @@ ext {
     navigation_version = '2.4.1'
 
     //sqldelight
-    sqldelight_version = '1.4.4'
+    sqldelight_version = '1.5.3'
 
     //ui
     constraintlayout_version = '2.1.3'
     groupie_version = '2.9.0'
-    glide_version = '4.11.0'
-    simplepass_loading_button_version = '2.2.0'
+    glide_version = '4.13.1'
     compose_version = '1.1.1'
 
     //rx3
-    rxjava3_rxjava_version = '3.0.6'
+    rxjava3_rxjava_version = '3.1.3'
     rxjava3_rxandroid_version = '3.0.0'
     rxjava3_rxkotlin_version = '3.0.1'
-    rxrelay3_rxrelay_version = '3.0.0'
+    rxrelay3_rxrelay_version = '3.0.1'
     rxbinding4_version = '4.0.0'
 
 
@@ -43,7 +42,7 @@ ext {
     moshi_version = '1.7.0'
 
     //misc util
-    three_ten_version = '1.3.0'
+    three_ten_version = '1.3.1'
     androidx_security_crypto_version = '1.0.0-rc02'
 
     //test

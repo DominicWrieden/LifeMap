@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.animation.*
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -16,7 +17,9 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.painterResource
@@ -33,7 +36,7 @@ import com.dominicwrieden.lifemap.feature.login.model.LoginMessageState
 import com.dominicwrieden.lifemap.feature.login.model.LoginTextInputState
 import com.dominicwrieden.lifemap.feature.login.viewmodel.LoginViewModel
 import com.dominicwrieden.lifemap.ui.LifeMapTheme
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 @ExperimentalAnimationApi
 class LoginComposeFragment : BaseFragment() {
@@ -59,8 +62,8 @@ class LoginComposeFragment : BaseFragment() {
 
     @Composable
     fun Screen(viewModel: LoginViewModel = getViewModel()) {
-        val userName: String? by viewModel.userName.observeAsState("")
-        val password: String? by viewModel.password.observeAsState("")
+        val userName: String by viewModel.userName.observeAsState("")
+        val password: String by viewModel.password.observeAsState("")
         val isLoading: LoginButtonState? by viewModel.loginButtonState.observeAsState(
             LoginButtonState.Initial
         )
@@ -103,7 +106,12 @@ class LoginComposeFragment : BaseFragment() {
         isLoading: Boolean,
         loginMessageState: LoginMessageState = LoginMessageState.Initial
     ) {
+
+
         Column(
+            modifier = Modifier
+                .background(color = MaterialTheme.colors.background)
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -114,7 +122,7 @@ class LoginComposeFragment : BaseFragment() {
                 colorFilter = ColorFilter.tint(MaterialTheme.colors.primary)
             )
 
-            Spacer(modifier = Modifier.fillMaxHeight(0.1f))
+            Spacer(modifier = Modifier.fillMaxHeight(0.5f))
 
 
             OutlinedTextField(
@@ -134,8 +142,8 @@ class LoginComposeFragment : BaseFragment() {
             ) {
                 this@Column.AnimatedVisibility(
                     visible = userNameInputState is LoginTextInputState.Error,
-                    enter = slideInVertically(),
-                    exit = slideOutVertically()
+                    enter = slideInVertically() + fadeIn(),
+                    exit = slideOutVertically() + fadeOut()
                 ) {
                     Text(
                         modifier = Modifier.padding(start = 16.dp),
@@ -169,8 +177,8 @@ class LoginComposeFragment : BaseFragment() {
             ) {
                 this@Column.AnimatedVisibility(
                     visible = passwordInputState is LoginTextInputState.Error,
-                    enter = slideInVertically(),
-                    exit = slideOutVertically()
+                    enter = slideInVertically() + fadeIn(),
+                    exit = slideOutVertically() + fadeOut()
                 ) {
                     Text(
                         modifier = Modifier.padding(start = 16.dp),
@@ -184,7 +192,7 @@ class LoginComposeFragment : BaseFragment() {
 
             }
 
-            Spacer(modifier = Modifier.fillMaxHeight(0.1f))
+            Spacer(modifier = Modifier.fillMaxHeight(0.5f))
             Box(
                 modifier = Modifier
                     .height(48.dp)
@@ -194,14 +202,14 @@ class LoginComposeFragment : BaseFragment() {
                 this@Column.AnimatedVisibility(
                     modifier = Modifier.align(Center),
                     visible = !isLoading,
-                    enter = scaleIn(),
-                    exit = scaleOut()
+                    enter = scaleIn() + fadeIn(),
+                    exit = scaleOut() + fadeOut()
                 ) {
                     Button(
-
                         modifier = Modifier
                             .fillMaxWidth(0.6f)
-                            .height(48.dp),
+                            .height(48.dp)
+                            .shadow(elevation =20.dp, shape = RectangleShape, clip = false),
                         onClick = onLoginButtonClicked,
                         shape = RoundedCornerShape(50)
                     ) {
@@ -212,8 +220,8 @@ class LoginComposeFragment : BaseFragment() {
                 this@Column.AnimatedVisibility(
                     modifier = Modifier.align(Center),
                     visible = isLoading,
-                    enter = scaleIn(),
-                    exit = scaleOut()
+                    enter = scaleIn() + fadeIn(),
+                    exit = scaleOut() + fadeOut()
                 ) {
                     CircularProgressIndicator()
                 }
@@ -239,8 +247,8 @@ class LoginComposeFragment : BaseFragment() {
     fun PreviewLoginScreen() {
         LifeMapTheme {
             LoginScreen(
-                userName = "bla",
-                password = "bla",
+                userName = "Dominique",
+                password = "Musterperson",
                 isLoading = false
             )
         }

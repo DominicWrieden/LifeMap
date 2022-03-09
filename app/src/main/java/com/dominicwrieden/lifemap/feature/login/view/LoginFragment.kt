@@ -106,11 +106,11 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun showLoginButtonLoadingState() {
-        binding.loginButton.startAnimation()
+        //binding.loginButton.startAnimation()
     }
 
     private fun showLoginButtonInitialState() {
-        binding.loginButton.revertAnimation()
+        //binding.loginButton.revertAnimation()
         binding.loginButton.background = ContextCompat.getDrawable(requireContext(),R.drawable.button_shape_round)
     }
 
