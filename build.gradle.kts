@@ -8,10 +8,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.1.2")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
-        classpath("com.squareup.sqldelight:gradle-plugin:1.5.3")
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.4.1")
+        classpath(Dependencies.ANDROID_GRADLE_PLUGIN)
+        classpath(Dependencies.KOTLIN.GRADLE_PLUGIN)
+        classpath(Dependencies.SQLDELIGHT.GRADLE_PLUGIN)
+        classpath(Dependencies.NAVIGATION.SAFE_ARGS_GRADLE_PLUGIN)
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
