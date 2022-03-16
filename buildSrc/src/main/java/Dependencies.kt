@@ -122,4 +122,7 @@ object Dependencies {
         private const val VERSION = "1.5.3"
         const val GRADLE_PLUGIN ="com.squareup.sqldelight:gradle-plugin:$VERSION"
     }
+
+    private const val DEPENDENCY_UPDATE_WATCHER_GRADLE_PLUGIN_VERSION = "0.42.0"
+    const val DEPENDENCY_UPDATE_WATCHER_GRADLE_PLUGIN = "com.github.ben-manes:gradle-versions-plugin:$DEPENDENCY_UPDATE_WATCHER_GRADLE_PLUGIN_VERSION"
 }
