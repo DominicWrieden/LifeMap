@@ -121,6 +121,9 @@ object Dependencies {
     object SQLDELIGHT{
         private const val VERSION = "1.5.3"
         const val GRADLE_PLUGIN ="com.squareup.sqldelight:gradle-plugin:$VERSION"
+        const val ANDROID_DRIVER = "com.squareup.sqldelight:android-driver:$VERSION"
+        const val SQLITE_DRIVER = "com.squareup.sqldelight:sqlite-driver:$VERSION"
+        const val RXJAVA3_EXTENSION = "com.squareup.sqldelight:rxjava3-extensions:$VERSION"
     }
 
     private const val DEPENDENCY_UPDATE_WATCHER_GRADLE_PLUGIN_VERSION = "0.42.0"

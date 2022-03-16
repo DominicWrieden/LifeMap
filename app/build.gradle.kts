@@ -5,7 +5,6 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
-    id("kotlin-kapt")
     id("androidx.navigation.safeargs.kotlin")
 }
 
@@ -34,7 +33,7 @@ android {
 
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -72,7 +71,7 @@ android {
     }
 
 
-    flavorDimensions("server")
+    flavorDimensions.add("server")
 
     productFlavors {
         create("oldAPI") {
@@ -101,26 +100,15 @@ dependencies {
     implementation(Dependencies.APPCOMPAT)
     implementation(Dependencies.MULTIDEX) //TODO really neccessary?
     implementation(Dependencies.GOOGLE_PLAY_SERVICE)
-
-
-    //architecture components
     // TODO 2022-02-25: Delete? implementation "androidx.lifecycle:lifecycle-extensions-ktx:$androidx_lifecycle_version"
     implementation(Dependencies.LIFECYCLE.REACTIVESTREAMS_KTX)
     implementation(Dependencies.MATERIAL)
-
-
-    //navigation
     implementation(Dependencies.NAVIGATION.FRAGMENT)
     implementation(Dependencies.NAVIGATION.UI)
     implementation(Dependencies.NAVIGATION.COMPOSE)
-
-
-    //ui
     implementation(Dependencies.CONSTRAINT_LAYOUT)
     implementation(Dependencies.GLIDE.GLIDE)
     kapt(Dependencies.GLIDE.COMPILER)
-
-    // jetpack compose
     implementation(Dependencies.COMPOSE.UI_UI)
     implementation(Dependencies.COMPOSE.UI_TOOLING)
     implementation(Dependencies.COMPOSE.FOUNDATION)
@@ -132,16 +120,11 @@ dependencies {
     implementation(Dependencies.COMPOSE.RUNTIME_LIVEDATA)
     implementation(Dependencies.COMPOSE.RUNTIME_RXJAVA2)
     androidTestImplementation(Dependencies.COMPOSE.UI_TEST_JUNIT4)
-
-    //rx 3
     implementation(Dependencies.RXJAVA3_RXJAVA)
     implementation(Dependencies.RXJAVA3_RXANDROID)
     implementation(Dependencies.RXJAVA3_RXKOTLIN)
     implementation(Dependencies.RXJAVA_RXRELAY)
     implementation(Dependencies.RXJAVA3_RXBINDING)
-
-
-    //injection
     implementation(Dependencies.KOIN.CORE)
     testImplementation(Dependencies.KOIN.TEST)
     testImplementation(Dependencies.KOIN.TEST_JUNIT4)
@@ -151,14 +134,9 @@ dependencies {
     implementation(Dependencies.KOIN.ANDROIDX_WORKMANAGER)
     implementation(Dependencies.KOIN.ANDROIDX_NAVIGATION)
     implementation(Dependencies.KOIN.ANDROIDX_COMPOSE)
-
-    //misc util
     implementation(Dependencies.THREETEN)
     //TODO 2022.02.25: ArcGis needs to be fixed. Best case: Import old API like this https://developers.arcgis.com/android/get-started/
     // implementation 'com.esri.arcgis.android:arcgis-android:10.2.8-1'
-
-
-    //test
     testImplementation(Dependencies.JUNIT)
     androidTestImplementation(Dependencies.TEST_EXT_JUNIT)
     androidTestImplementation(Dependencies.TEST_ESPRESSO)
