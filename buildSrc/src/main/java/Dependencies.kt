@@ -37,7 +37,8 @@ object Dependencies {
             "androidx.navigation:navigation-fragment-ktx:$VERSION"
         const val UI = "androidx.navigation:navigation-ui-ktx:$VERSION"
         const val COMPOSE = "androidx.navigation:navigation-compose:$VERSION"
-        const val SAFE_ARGS_GRADLE_PLUGIN = "androidx.navigation:navigation-safe-args-gradle-plugin:$VERSION"
+        const val SAFE_ARGS_GRADLE_PLUGIN =
+            "androidx.navigation:navigation-safe-args-gradle-plugin:$VERSION"
     }
 
     private const val CONSTRAINT_LAYOUT_VERSION = "2.1.3"
@@ -61,12 +62,11 @@ object Dependencies {
         const val MATERIAL_ICONS_EXTENDED =
             "androidx.compose.material:material-icons-extended:$VERSION"
         const val RUNTIME_LIVEDATA = "androidx.compose.runtime:runtime-livedata:$VERSION"
-        const val RUNTIME_RXJAVA2 ="androidx.compose.runtime:runtime-rxjava2:$VERSION"
+        const val RUNTIME_RXJAVA2 = "androidx.compose.runtime:runtime-rxjava2:$VERSION"
     }
 
     private const val ACTIVITY_VERSION = "1.4.0"
     const val ACTIVITY_COMPOSE = "androidx.activity:activity-compose:$ACTIVITY_VERSION"
-
 
 
     private const val RXJAVA3_RXJAVA_VERSION = "3.1.3"
@@ -79,7 +79,7 @@ object Dependencies {
     const val RXJAVA3_RXKOTLIN = "io.reactivex.rxjava3:rxkotlin:$RXJAVA3_RXKOTLIN_VERSION"
 
     private const val RXJAVA3_RXRELAY_VERSION = "3.0.1"
-    const val RXJAVA_RXRELAY = "com.jakewharton.rxrelay3:rxrelay:$RXJAVA3_RXRELAY_VERSION"
+    const val RXJAVA3_RXRELAY = "com.jakewharton.rxrelay3:rxrelay:$RXJAVA3_RXRELAY_VERSION"
 
     private const val RXJAVA3_RXBINDING_VERSION = "4.0.0"
     const val RXJAVA3_RXBINDING = "com.jakewharton.rxbinding4:rxbinding:$RXJAVA3_RXBINDING_VERSION"
@@ -106,7 +106,7 @@ object Dependencies {
     private const val TEST_EXT_JUNIT_VERSION = "1.1.3"
     const val TEST_EXT_JUNIT = "androidx.test.ext:junit:$TEST_EXT_JUNIT_VERSION"
 
-    private const val TEST_ESPRESSO_VERSION= "3.4.0"
+    private const val TEST_ESPRESSO_VERSION = "3.4.0"
     const val TEST_ESPRESSO = "androidx.test.espresso:espresso-core:$TEST_ESPRESSO_VERSION"
 
     private const val MOCKITO_VERSION = "2.2.0"
@@ -118,14 +118,31 @@ object Dependencies {
     private const val ARCH_CORE_TESTING_VERSION = "2.1.0"
     const val ARCH_CORE_TESTING = "androidx.arch.core:core-testing:$ARCH_CORE_TESTING_VERSION"
 
-    object SQLDELIGHT{
+    object SQLDELIGHT {
         private const val VERSION = "1.5.3"
-        const val GRADLE_PLUGIN ="com.squareup.sqldelight:gradle-plugin:$VERSION"
+        const val GRADLE_PLUGIN = "com.squareup.sqldelight:gradle-plugin:$VERSION"
         const val ANDROID_DRIVER = "com.squareup.sqldelight:android-driver:$VERSION"
         const val SQLITE_DRIVER = "com.squareup.sqldelight:sqlite-driver:$VERSION"
         const val RXJAVA3_EXTENSION = "com.squareup.sqldelight:rxjava3-extensions:$VERSION"
     }
 
     private const val DEPENDENCY_UPDATE_WATCHER_GRADLE_PLUGIN_VERSION = "0.42.0"
-    const val DEPENDENCY_UPDATE_WATCHER_GRADLE_PLUGIN = "com.github.ben-manes:gradle-versions-plugin:$DEPENDENCY_UPDATE_WATCHER_GRADLE_PLUGIN_VERSION"
+    const val DEPENDENCY_UPDATE_WATCHER_GRADLE_PLUGIN =
+        "com.github.ben-manes:gradle-versions-plugin:$DEPENDENCY_UPDATE_WATCHER_GRADLE_PLUGIN_VERSION"
+
+    private const val MOSHI_VERSION = "1.7.0"
+    const val MOSHI = "com.squareup.moshi:moshi:$MOSHI_VERSION"
+
+    object RETROFIT {
+        private const val VERSION = "2.9.0"
+        const val RETROFIT = "com.squareup.retrofit2:retrofit:$VERSION"
+        const val CONVERTER_MOSHI = "com.squareup.retrofit2:converter-moshi:$VERSION"
+    }
+
+    private const val RXJAVA3_RETROFIT_ADAPTER_VERSION = "3.0.0"
+    const val RXJAVA3_RETROFIT_ADAPTER = "com.github.akarnokd:rxjava3-retrofit-adapter:$RXJAVA3_RETROFIT_ADAPTER_VERSION"
+
+    private const val SECURITY_CRYPTO_VERSION = "1.0.0-rc02"
+    const val SECURITY_CRYPTO = "androidx.security:security-crypto:$SECURITY_CRYPTO_VERSION"
+
 }

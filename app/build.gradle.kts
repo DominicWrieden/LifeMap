@@ -123,7 +123,7 @@ dependencies {
     implementation(Dependencies.RXJAVA3_RXJAVA)
     implementation(Dependencies.RXJAVA3_RXANDROID)
     implementation(Dependencies.RXJAVA3_RXKOTLIN)
-    implementation(Dependencies.RXJAVA_RXRELAY)
+    implementation(Dependencies.RXJAVA3_RXRELAY)
     implementation(Dependencies.RXJAVA3_RXBINDING)
     implementation(Dependencies.KOIN.CORE)
     testImplementation(Dependencies.KOIN.TEST)
