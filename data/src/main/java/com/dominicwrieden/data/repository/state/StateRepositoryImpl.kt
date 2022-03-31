@@ -5,9 +5,12 @@ import com.dominicwrieden.api.`interface`.Api
 import com.dominicwrieden.api.model.Response
 import com.dominicwrieden.api.model.State
 import com.dominicwrieden.data.model.toTask
+import org.koin.java.KoinJavaComponent.inject
 
-class StateRepositoryImpl(private val database: LifeMapDatabaseQueries, private val api: Api) :
-    StateRepository {
+class StateRepositoryImpl : StateRepository {
+
+    val database: LifeMapDatabaseQueries by inject(LifeMapDatabaseQueries::class.java)
+    val api: Api by inject(Api::class.java)
 
 
     override fun downloadStates() = api.getStates()

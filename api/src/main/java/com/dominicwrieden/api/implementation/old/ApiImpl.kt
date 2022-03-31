@@ -8,13 +8,15 @@ import com.dominicwrieden.api.model.*
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import org.koin.java.KoinJavaComponent.inject
 import java.io.InputStream
 
-internal class ApiImpl(
-    private val authenticationService: AuthenticationService,
-    private val contentService: ContentService,
-    private val authenticationManager: AuthenticationManager
-) : Api {
+internal class ApiImpl : Api {
+
+    val authenticationService: AuthenticationService by inject(AuthenticationService::class.java)
+    val contentService: ContentService by inject(ContentService::class.java)
+    val authenticationManager: AuthenticationManager by inject(AuthenticationManager::class.java)
+
     override val authenticationStatus: Observable<AuthenticationStatus>
         get() = authenticationManager.authenticationStatus
 

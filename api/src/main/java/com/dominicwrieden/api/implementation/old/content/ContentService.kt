@@ -7,16 +7,16 @@ import com.dominicwrieden.api.model.*
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import okhttp3.ResponseBody
+import org.koin.java.KoinJavaComponent.inject
 import java.io.IOException
 import java.io.InputStream
 
 
 //TODO: Es heißt hier immer getStatuses, aber man bekommt States zurück
-internal class ContentService(
-    private val contentApi: ContentApi,
-    private val authenticationSharedPreferences: AuthenticationSharedPreferences
-) {
+internal class ContentService {
 
+    val contentApi: ContentApi by inject(ContentApi::class.java)
+    val authenticationSharedPreferences: AuthenticationSharedPreferences by inject(AuthenticationSharedPreferences::class.java)
 
     fun getAreas(): Single<Response<List<Area>>> = contentApi.getAreas()
         .subscribeOn(Schedulers.io())

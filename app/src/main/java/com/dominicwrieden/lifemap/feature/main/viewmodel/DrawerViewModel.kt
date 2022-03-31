@@ -5,10 +5,11 @@ import com.dominicwrieden.data.model.Result
 import com.dominicwrieden.lifemap.core.BaseViewModel
 import com.dominicwrieden.lifemap.usecase.area.GetAreasForUserUseCase
 import io.reactivex.rxjava3.core.Single
+import org.koin.java.KoinJavaComponent.inject
 
-class DrawerViewModel(
-    private val getAreasForUserUseCase: GetAreasForUserUseCase
-) : BaseViewModel() {
+class DrawerViewModel: BaseViewModel() {
+
+    val getAreasForUserUseCase: GetAreasForUserUseCase by inject(GetAreasForUserUseCase::class.java)
 
     val areas: Single<List<Area>> = getAreasForUserUseCase.invoke().map {
         when (it) {

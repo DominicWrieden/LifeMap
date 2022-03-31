@@ -5,17 +5,19 @@ import com.dominicwrieden.data.model.Result
 import com.dominicwrieden.data.model.Task
 import com.dominicwrieden.lifemap.usecase.item.GetItemsForAreaUseCase
 import io.reactivex.rxjava3.core.Single
+import org.koin.java.KoinJavaComponent.inject
 
 
 interface SetDefaultAreaUseCase {
     operator fun invoke(): Single<Task>
 }
 
-class SetDefaultAreaUseCaseImpl(
-    private val getAreasForUserUseCase: GetAreasForUserUseCase,
-    private val getItemsForAreaUseCase: GetItemsForAreaUseCase,
-    private val setSelectedAreaUseCase: SetSelectedAreaUseCase,
-) : SetDefaultAreaUseCase {
+class SetDefaultAreaUseCaseImpl: SetDefaultAreaUseCase {
+
+    val getAreasForUserUseCase: GetAreasForUserUseCase by inject(GetAreasForUserUseCase::class.java)
+    val getItemsForAreaUseCase: GetItemsForAreaUseCase by inject(GetItemsForAreaUseCase::class.java)
+    val setSelectedAreaUseCase: SetSelectedAreaUseCase by inject(SetSelectedAreaUseCase::class.java)
+
     override fun invoke(): Single<Task> =
         getAreasForUserUseCase.invoke().flatMap { resultAreasForUser ->
             when (resultAreasForUser) {

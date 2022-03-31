@@ -5,15 +5,17 @@ import com.dominicwrieden.data.model.Error
 import com.dominicwrieden.data.model.Result
 import com.dominicwrieden.lifemap.usecase.authentication.GetLoggedInUserUseCase
 import io.reactivex.rxjava3.core.Single
+import org.koin.java.KoinJavaComponent.inject
 
 interface GetAreasForUserUseCase {
     operator fun invoke(): Single<Result<List<Area>>>
 }
 
-class GetAreasForUserUseCaseImpl(
-    private val getAreaUseCase: GetAreaUseCase,
-    private val getLoggedInUserUseCase: GetLoggedInUserUseCase
-) : GetAreasForUserUseCase {
+class GetAreasForUserUseCaseImpl : GetAreasForUserUseCase {
+
+    val getAreaUseCase: GetAreaUseCase by inject(GetAreaUseCase::class.java)
+    val getLoggedInUserUseCase: GetLoggedInUserUseCase by inject(GetLoggedInUserUseCase::class.java)
+
     override fun invoke(): Single<Result<List<Area>>> = getLoggedInUserUseCase.invoke()
         .flatMap { userResult ->
             when (userResult) {

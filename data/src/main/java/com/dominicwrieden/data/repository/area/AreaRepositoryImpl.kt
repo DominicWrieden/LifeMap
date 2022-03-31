@@ -8,15 +8,15 @@ import com.dominicwrieden.data.model.*
 import com.dominicwrieden.data.util.FileManager
 import com.dominicwrieden.data.util.SharedPreferencesUtil
 import io.reactivex.rxjava3.core.Single
+import org.koin.java.KoinJavaComponent.inject
 import java.io.File
 
-class AreaRepositoryImpl(
-    private val database: LifeMapDatabaseQueries,
-    private val fileManager: FileManager,
-    private val sharedPreferencesUtil: SharedPreferencesUtil,
-    private val api: Api
-) :
-    AreaRepository {
+class AreaRepositoryImpl: AreaRepository {
+
+    val database: LifeMapDatabaseQueries by inject(LifeMapDatabaseQueries::class.java)
+    val fileManager: FileManager by inject(FileManager::class.java)
+    val sharedPreferencesUtil: SharedPreferencesUtil by inject(SharedPreferencesUtil::class.java)
+    val api: Api by inject(Api::class.java)
 
     companion object {
         private const val SELECTED_AREA_ID = "SELECTED_AREA_ID"

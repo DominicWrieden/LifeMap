@@ -66,55 +66,17 @@ val dataModule = module {
         FileManager(androidContext())
     }
 
-    single<AuthenticationRepository> {
-        AuthenticationRepositoryImpl(
-            get(),
-            get(),
-            get()
-        )
-    }
+    single<AuthenticationRepository> { AuthenticationRepositoryImpl()}
 
-    single<UserRepository> {
-        UserRepositoryImpl(
-            get(),
-            get()
-        )
-    }
+    single<UserRepository> { UserRepositoryImpl() }
 
-    single<AreaRepository> {
-        AreaRepositoryImpl(
-            get(),
-            get(),
-            get(),
-            get()
-        )
-    }
+    single<AreaRepository> { AreaRepositoryImpl() }
 
-    single<ItemRepository> {
-        ItemRepositoryImpl(
-            get(),
-            get()
-        )
-    }
+    single<ItemRepository> { ItemRepositoryImpl() }
 
-    single<StateRepository> {
-        StateRepositoryImpl(
-            get(),
-            get()
-        )
-    }
+    single<StateRepository> { StateRepositoryImpl() }
 
-    single<ItemTypeRepository> {
-        ItemTypeRepositoryImpl(
-            get(),
-            get()
-        )
-    }
+    single<ItemTypeRepository> { ItemTypeRepositoryImpl() }
 
-    single<PropertyConfigRepository> {
-        PropertyConfigRepositoryImpl(
-            get(),
-            get()
-        )
-    }
+    single<PropertyConfigRepository> { PropertyConfigRepositoryImpl() }
 }

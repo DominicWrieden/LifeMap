@@ -8,10 +8,13 @@ import com.dominicwrieden.data.model.queryToObservableResultMapToList
 import com.dominicwrieden.data.model.toTask
 import com.dominicwrieden.data.repository.item.model.AreaItem
 import io.reactivex.rxjava3.core.Observable
+import org.koin.java.KoinJavaComponent.inject
 import org.threeten.bp.OffsetDateTime
 
-class ItemRepositoryImpl(private val database: LifeMapDatabaseQueries, private val api: Api) :
-    ItemRepository {
+class ItemRepositoryImpl: ItemRepository {
+
+    val database: LifeMapDatabaseQueries by inject(LifeMapDatabaseQueries::class.java)
+    val api: Api by inject(Api::class.java)
 
     override fun downloadItemsForArea(areaId: String) = api.getItems(areaId)
         .doOnSuccess { itemsResponse ->

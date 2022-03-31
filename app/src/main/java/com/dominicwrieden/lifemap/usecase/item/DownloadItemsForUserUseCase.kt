@@ -6,17 +6,18 @@ import com.dominicwrieden.data.model.Task
 import com.dominicwrieden.data.repository.item.ItemRepository
 import com.dominicwrieden.lifemap.usecase.authentication.GetLoggedInUserUseCase
 import io.reactivex.rxjava3.core.Single
+import org.koin.java.KoinJavaComponent.inject
 
 
 interface DownloadItemsUseCase {
     operator fun invoke(): Single<Task>
 }
 
-class DownloadItemsUseCaseImpl(
-    private val itemRepository: ItemRepository,
-    private val getLoggedInUserUseCase: GetLoggedInUserUseCase
-) :
-    DownloadItemsUseCase {
+class DownloadItemsUseCaseImpl: DownloadItemsUseCase {
+
+    val itemRepository: ItemRepository by inject(ItemRepository::class.java)
+    val getLoggedInUserUseCase: GetLoggedInUserUseCase by inject(GetLoggedInUserUseCase::class.java)
+
     override fun invoke() = getLoggedInUserUseCase.invoke()
         .flatMap { resultUser ->
             when (resultUser) {

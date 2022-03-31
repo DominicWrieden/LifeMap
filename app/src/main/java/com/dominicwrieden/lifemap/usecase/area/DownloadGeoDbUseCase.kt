@@ -5,16 +5,19 @@ import com.dominicwrieden.data.model.Result
 import com.dominicwrieden.data.model.Task
 import com.dominicwrieden.data.repository.area.AreaRepository
 import io.reactivex.rxjava3.core.Single
+import org.koin.java.KoinJavaComponent.inject
 
 
 interface DownloadGeoDbForAreaUseCase {
     operator fun invoke(): Single<Task>
 }
 
-class DownloadGeoDbForAreaUseCaseImpl(
-    private val areaRepository: AreaRepository,
-    private val getAreasForUserUseCase: GetAreasForUserUseCase
-) : DownloadGeoDbForAreaUseCase {
+class DownloadGeoDbForAreaUseCaseImpl: DownloadGeoDbForAreaUseCase {
+
+    val areaRepository: AreaRepository by inject(AreaRepository::class.java)
+
+    val getAreasForUserUseCase: GetAreasForUserUseCase by inject(GetAreasForUserUseCase::class.java)
+
     override fun invoke() = getAreasForUserUseCase.invoke()
         .flatMap { areasResult ->
             when (areasResult) {

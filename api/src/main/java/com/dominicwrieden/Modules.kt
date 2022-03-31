@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit
 val oldApiModule = module {
 
     single { AuthenticationSharedPreferences(androidContext()) }
-    single { AuthenticationManager(get()) }
+    single { AuthenticationManager() }
 
     single {
         Moshi.Builder()
@@ -35,7 +35,7 @@ val oldApiModule = module {
 
     single {
         OkHttpClient.Builder()
-            .addInterceptor(AuthenticationInterceptor(get(),get()))
+            .addInterceptor(AuthenticationInterceptor())
             .writeTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS) //TODO refactoring: outsource this constant
             .connectTimeout(30, TimeUnit.SECONDS)
@@ -51,9 +51,12 @@ val oldApiModule = module {
             .build()
     }
 
-    single { AuthenticationService(get<Retrofit>().create(AuthenticationApi::class.java), get()) }
-    single { ContentService(get<Retrofit>().create(ContentApi::class.java), get()) }
+    single { get<Retrofit>().create(AuthenticationApi::class.java) }
+    single { get<Retrofit>().create(ContentApi::class.java) }
+
+    single { AuthenticationService() }
+    single { ContentService() }
 
 
-    single { ApiImpl(get(), get(), get()) } bind Api::class
+    single { ApiImpl() } bind Api::class
 }

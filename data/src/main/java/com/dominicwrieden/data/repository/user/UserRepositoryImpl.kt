@@ -8,9 +8,12 @@ import com.dominicwrieden.data.model.Result
 import com.dominicwrieden.data.model.queryToSingleResultMapToList
 import com.dominicwrieden.data.model.toTask
 import io.reactivex.rxjava3.core.Single
+import org.koin.java.KoinJavaComponent.inject
 
-class UserRepositoryImpl(private val database: LifeMapDatabaseQueries, private val api: Api) :
-    UserRepository {
+class UserRepositoryImpl: UserRepository {
+
+    val database: LifeMapDatabaseQueries by inject(LifeMapDatabaseQueries::class.java)
+    val api: Api by inject(Api::class.java)
 
     override fun downloadUsers()
             = api.getUsers()

@@ -8,11 +8,12 @@ import com.dominicwrieden.api.model.evaluateErrorResponse
 import com.dominicwrieden.api.model.evaluateResponse
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
+import org.koin.java.KoinJavaComponent.inject
 
-internal class AuthenticationService(
-    private val authenticationApi: AuthenticationApi,
-    private val authenticationManager: AuthenticationManager
-) {
+internal class AuthenticationService{
+
+    val authenticationApi: AuthenticationApi by inject(AuthenticationApi::class.java)
+    val authenticationManager: AuthenticationManager by inject(AuthenticationManager::class.java)
 
 
     fun login(username: String, password: String): Single<Response<User>> =

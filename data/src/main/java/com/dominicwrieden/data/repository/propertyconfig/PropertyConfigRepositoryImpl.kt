@@ -5,9 +5,12 @@ import com.dominicwrieden.api.`interface`.Api
 import com.dominicwrieden.api.model.PropertyConfig
 import com.dominicwrieden.api.model.Response
 import com.dominicwrieden.data.model.toTask
+import org.koin.java.KoinJavaComponent.inject
 
-class PropertyConfigRepositoryImpl(private val database: LifeMapDatabaseQueries, private val api: Api):
-    PropertyConfigRepository {
+class PropertyConfigRepositoryImpl:PropertyConfigRepository {
+
+    val database: LifeMapDatabaseQueries by inject(LifeMapDatabaseQueries::class.java)
+    val api: Api by inject(Api::class.java)
 
     override fun downloadPropertyConfigs() = api.getPropertyConfigs()
         .doOnSuccess { propertyConfigsResponse ->

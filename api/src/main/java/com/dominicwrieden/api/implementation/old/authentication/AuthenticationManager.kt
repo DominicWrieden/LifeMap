@@ -4,8 +4,11 @@ import com.dominicwrieden.api.implementation.old.authentication.source.local.Aut
 import com.dominicwrieden.api.model.AuthenticationStatus
 import com.jakewharton.rxrelay3.BehaviorRelay
 import io.reactivex.rxjava3.core.Observable
+import org.koin.java.KoinJavaComponent.inject
 
-internal class AuthenticationManager(private val authenticationSharedPreferences: AuthenticationSharedPreferences) {
+internal class AuthenticationManager {
+
+    val authenticationSharedPreferences: AuthenticationSharedPreferences by inject(AuthenticationSharedPreferences::class.java)
 
     private val authenticationRelay = BehaviorRelay.create<AuthenticationStatus>()
 

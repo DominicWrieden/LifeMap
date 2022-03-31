@@ -28,56 +28,28 @@ import org.koin.dsl.module
 val appModule = module {
 
     single { NavigationManager() }
+    single<LoginUseCase> { LoginUseCaseImpl() }
+    single<GetLoggedInUserUseCase> { GetLoggedInUserUseCaseImpl() }
+    single<DownloadAreasUseCase> { DownloadAreasUseCaseImpl() }
+    single<DownloadUsersUseCase> { DownloadUsersUseCaseImpl() }
+    single<DownloadStatesUseCase> { DownloadStatesUseCaseImpl() }
+    single<DownloadPropertyConfigsUseCase> { DownloadPropertyConfigsUseCaseImpl() }
+    single<DownloadItemTypesUseCase> { DownloadItemTypesUseCaseImpl() }
+    single<DownloadItemsUseCase> { DownloadItemsUseCaseImpl() }
+    single<GetAreaUseCase> { GetAreaUseCaseImpl() }
+    single<GetAreasForUserUseCase> { GetAreasForUserUseCaseImpl() }
+    single<DownloadGeoDbForAreaUseCase> { DownloadGeoDbForAreaUseCaseImpl() }
+    single<GetGeoDbForAreaUseCase> { GetGeoDbForAreaUseCaseImpl() }
+    single<GetItemsForAreaUseCase> { GetItemsForAreaUseCaseImpl() }
+    single<GetSelectedAreaUseCase> { GetSelectedAreaUseCaseImpl() }
+    single<SetSelectedAreaUseCase> { SetSelectedAreaUseCaseImpl() }
+    single<SetDefaultAreaUseCase> { SetDefaultAreaUseCaseImpl() }
 
-    single<LoginUseCase> { LoginUseCaseImpl(get()) }
-    single<GetLoggedInUserUseCase> { GetLoggedInUserUseCaseImpl(get()) }
-    single<DownloadAreasUseCase> { DownloadAreasUseCaseImpl(get()) }
-    single<DownloadUsersUseCase> { DownloadUsersUseCaseImpl(get()) }
-    single<DownloadStatesUseCase> { DownloadStatesUseCaseImpl(get()) }
-    single<DownloadPropertyConfigsUseCase> { DownloadPropertyConfigsUseCaseImpl(get()) }
-    single<DownloadItemTypesUseCase> { DownloadItemTypesUseCaseImpl(get()) }
-    single<DownloadItemsUseCase> { DownloadItemsUseCaseImpl(get(), get()) }
-    single<GetAreaUseCase> { GetAreaUseCaseImpl(get()) }
-    single<GetAreasForUserUseCase> { GetAreasForUserUseCaseImpl(get(), get()) }
-    single<DownloadGeoDbForAreaUseCase> { DownloadGeoDbForAreaUseCaseImpl(get(), get()) }
-    single<GetGeoDbForAreaUseCase> { GetGeoDbForAreaUseCaseImpl(get()) }
-    single<GetItemsForAreaUseCase> { GetItemsForAreaUseCaseImpl(get()) }
-    single<GetSelectedAreaUseCase> { GetSelectedAreaUseCaseImpl(get()) }
-    single<SetSelectedAreaUseCase> { SetSelectedAreaUseCaseImpl(get()) }
-    single<SetDefaultAreaUseCase> { SetDefaultAreaUseCaseImpl(get(), get(), get()) }
+    viewModel { LoginViewModel() }
 
-//TODO 2022-03-08: Stupid me, inject in viewmodels
-    viewModel {
-        LoginViewModel(
-            navigationManager = get(),
-            loginUseCase = get(),
-            downloadAreasUseCase = get(),
-            downloadStatesUseCase = get(),
-            downloadUsersUseCase = get(),
-            downloadItemTypesUseCase = get(),
-            downloadPropertyConfigsUseCase = get(),
-            downloadItemsUseCase = get(),
-            downloadGeoDbForAreaUseCase = get(),
-            setDefaultAreaUseCase = get()
-        )
-    }
-    viewModel {
-        MapViewModel(
-            getSelectedAreaUseCase = get(),
-            getGeoDbForAreaUseCase = get(),
-            getItemsForAreaUseCase = get()
-        )
-    }
-    viewModel {
-        MainViewModel(
-            authenticationRepository = get(),
-            navigationManager = get()
-        )
-    }
+    viewModel { MapViewModel() }
 
-    viewModel{
-        DrawerViewModel(
-            getAreasForUserUseCase = get()
-        )
-    }
+    viewModel {MainViewModel() }
+
+    viewModel {DrawerViewModel()}
 }

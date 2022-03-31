@@ -10,12 +10,13 @@ import com.dominicwrieden.lifemap.usecase.item.GetItemsForAreaUseCase
 import com.dominicwrieden.lifemap.util.toUnsubscribedLiveData
 import com.jakewharton.rxrelay3.BehaviorRelay
 import io.reactivex.rxjava3.kotlin.addTo
+import org.koin.java.KoinJavaComponent.inject
 
-class MapViewModel(
-    getSelectedAreaUseCase: GetSelectedAreaUseCase,
-    getGeoDbForAreaUseCase: GetGeoDbForAreaUseCase,
-    getItemsForAreaUseCase: GetItemsForAreaUseCase
-) : BaseViewModel() {
+class MapViewModel : BaseViewModel() {
+
+    val getSelectedAreaUseCase: GetSelectedAreaUseCase by inject(GetSelectedAreaUseCase::class.java)
+    val getGeoDbForAreaUseCase: GetGeoDbForAreaUseCase by inject(GetGeoDbForAreaUseCase::class.java)
+    val getItemsForAreaUseCase: GetItemsForAreaUseCase by inject(GetItemsForAreaUseCase::class.java)
 
     private val mapStateRelay = BehaviorRelay.create<MapStates>()
 

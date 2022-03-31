@@ -24,20 +24,20 @@ import com.dominicwrieden.lifemap.util.toLiveData
 import com.jakewharton.rxrelay3.BehaviorRelay
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.kotlin.addTo
+import org.koin.java.KoinJavaComponent.inject
 
-class LoginViewModel(
-    private val navigationManager: NavigationManager,
-    private val loginUseCase: LoginUseCase,
-    private val downloadAreasUseCase: DownloadAreasUseCase,
-    private val downloadStatesUseCase: DownloadStatesUseCase,
-    private val downloadUsersUseCase: DownloadUsersUseCase,
-    private val downloadItemTypesUseCase: DownloadItemTypesUseCase,
-    private val downloadPropertyConfigsUseCase: DownloadPropertyConfigsUseCase,
-    private val downloadItemsUseCase: DownloadItemsUseCase,
-    private val downloadGeoDbForAreaUseCase: DownloadGeoDbForAreaUseCase,
-    private val setDefaultAreaUseCase: SetDefaultAreaUseCase
+class LoginViewModel : BaseViewModel() {
 
-) : BaseViewModel() {
+    val navigationManager: NavigationManager by inject(NavigationManager::class.java)
+    val loginUseCase: LoginUseCase by inject(LoginUseCase::class.java)
+    val downloadAreasUseCase: DownloadAreasUseCase  by inject(DownloadAreasUseCase::class.java)
+    val downloadStatesUseCase: DownloadStatesUseCase by inject(DownloadStatesUseCase::class.java)
+    val downloadUsersUseCase: DownloadUsersUseCase by inject(DownloadUsersUseCase::class.java)
+    val downloadItemTypesUseCase: DownloadItemTypesUseCase by inject(DownloadItemTypesUseCase::class.java)
+    val downloadPropertyConfigsUseCase: DownloadPropertyConfigsUseCase by inject(DownloadPropertyConfigsUseCase::class.java)
+    val downloadItemsUseCase: DownloadItemsUseCase by inject(DownloadItemsUseCase::class.java)
+    val downloadGeoDbForAreaUseCase: DownloadGeoDbForAreaUseCase by inject(DownloadGeoDbForAreaUseCase::class.java)
+    val setDefaultAreaUseCase: SetDefaultAreaUseCase by inject(SetDefaultAreaUseCase::class.java)
 
     private val userNameInputStateRelay =
         BehaviorRelay.createDefault<LoginTextInputState>(LoginTextInputState.Initial)

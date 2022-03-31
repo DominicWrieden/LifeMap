@@ -6,12 +6,13 @@ import com.dominicwrieden.api.implementation.old.authentication.source.local.Aut
 import com.dominicwrieden.api.implementation.old.authentication.source.retrofit.AuthenticationApi
 import com.squareup.moshi.Moshi
 import okhttp3.*
+import org.koin.java.KoinJavaComponent.inject
 import java.io.IOException
 
-internal class AuthenticationInterceptor(
-    private val authenticationSharedPreferences: AuthenticationSharedPreferences,
-    private val authenticationManager: AuthenticationManager
-) : Interceptor {
+internal class AuthenticationInterceptor: Interceptor {
+
+    val authenticationSharedPreferences: AuthenticationSharedPreferences by inject(AuthenticationSharedPreferences::class.java)
+    val authenticationManager: AuthenticationManager by inject(AuthenticationManager::class.java)
 
     companion object {
         private val TOKEN_INVALID = "invalid"

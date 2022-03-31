@@ -5,9 +5,12 @@ import com.dominicwrieden.api.`interface`.Api
 import com.dominicwrieden.api.model.ItemType
 import com.dominicwrieden.api.model.Response
 import com.dominicwrieden.data.model.toTask
+import org.koin.java.KoinJavaComponent.inject
 
-class ItemTypeRepositoryImpl(private val database: LifeMapDatabaseQueries, private val api: Api):
-    ItemTypeRepository {
+class ItemTypeRepositoryImpl: ItemTypeRepository {
+
+    val database: LifeMapDatabaseQueries by inject(LifeMapDatabaseQueries::class.java)
+    val api: Api by inject(Api::class.java)
 
     override fun downloadItemTypes() = api.getItemTypes()
         .doOnSuccess { itemTypesResponse ->

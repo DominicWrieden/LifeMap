@@ -15,9 +15,15 @@ import com.squareup.sqldelight.runtime.rx3.mapToOne
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import org.koin.java.KoinJavaComponent.inject
 
-class AuthenticationRepositoryImpl(private val database: LifeMapDatabaseQueries, val api: Api, val sharedPreferencesUtil: SharedPreferencesUtil):
-    AuthenticationRepository {
+class AuthenticationRepositoryImpl(): AuthenticationRepository {
+
+    val database:LifeMapDatabaseQueries by inject(LifeMapDatabaseQueries::class.java)
+    val api:Api by inject(Api::class.java)
+    val sharedPreferencesUtil:SharedPreferencesUtil by inject(SharedPreferencesUtil::class.java)
+
+
     override val authenticationStatus: Observable<AuthenticationStatus>
         get() = api.authenticationStatus
 
